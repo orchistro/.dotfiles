@@ -1,0 +1,6 @@
+tmux/.config/tmux/plugins/
+zsh/.config/
+
+nvim/.config/nvim/lazy-lock.json
+nvim/.config/nvim/.luarc.json
+

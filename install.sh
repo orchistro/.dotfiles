@@ -1,0 +1,46 @@
+#!/bin/bash
+
+unset ZSH
+
+self_dir=$(cd -- "$(dirname "$0")" > /dev/null 2>&1; pwd -P)
+
+# oh my zsh
+OMZ_DIR=${self_dir}/zsh/.config/oh-my-zsh
+rm -rf ${OMZ_DIR}
+# mkdir -p zsh/.config
+ZSH=${OMZ_DIR} sh -c \
+  "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+  "" \
+  --unattended
+
+# powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${OMZ_DIR}/custom/themes/powerlevel10k
+
+# tpm
+# tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요
+# tpm은 수동으로 설치
+TMUX_DIR=${self_dir}/tmux/.config/tmux
+rm -rf ${TMUX_DIR}/plugins
+git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
+
+# 기존에 설치되어 있을지도 모르는 것들을 제거
+rm -f ~/.zshrc*  # OMZ 설치시 만들어준 .zshrc제거 (추후 stow로 zshrc 설치할 것임)
+rm -rf ~/.config/nvim
+rm -rf ~/.config/oh-my-zsh
+rm -rf ~/.oh-my-zsh
+rm -rf ~/.config/tmux
+rm -rf ~/.tmux
+rm -rf ~/.tmux.conf
+
+rm -rf ~/.local/share/nvim
+
+if [ "$(uname)" == "Linux" ];then
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+  rm -rf ~/.local/nvim-linux64
+  tar -C ~/.local -xzf nvim-linux64.tar.gz
+  rm -f nvim-linux64.tar.gz
+fi
+
+
+# GNU stow 로 링크!
+stow nvim zsh tmux local
