@@ -18,10 +18,14 @@ return {
 			local ls = require("luasnip")
 
 			-- vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-      -- snippet을 띄운 후 placeholder에서 타이핑을 하다가 다음 placeholder로 넘어가거나
-      -- 이전 placeholder로 넘어가는 키 맵
-			vim.keymap.set({ "i", "s" }, "<C-K>", function() ls.jump(1) end, { silent = true })
-			vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
+			-- snippet을 띄운 후 placeholder에서 타이핑을 하다가 다음 placeholder로 넘어가거나
+			-- 이전 placeholder로 넘어가는 키 맵
+			vim.keymap.set({ "i", "s" }, "<C-K>", function()
+				ls.jump(1)
+			end, { silent = true })
+			vim.keymap.set({ "i", "s" }, "<C-J>", function()
+				ls.jump(-1)
+			end, { silent = true })
 		end,
 	},
 	{
@@ -89,12 +93,17 @@ return {
 				matching = { disallow_symbol_nonprefix_matching = false },
 			})
 
+			-- 이 부분은 lsp-config.lua 에서 default_capabilities를 호출해서 설정하고 있다.
+			-- 여기서 setup을 하게 되면, clangd setup을 여기서 해 버리기 때문에
+			-- filetype등의 옵션이 설정된 lsp-config.lua에서 하고 있는 설정들이 올바로 clangd로 전달되지 않는다.
+			-- 그래서 지우려고 했으나 기록을 남겨 두기 위해 주석 처리함
+			--
 			-- Set up lspconfig.
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-			require("lspconfig")["clangd"].setup({
-				capabilities = capabilities,
-			})
+			-- require("lspconfig")["clangd"].setup({
+			-- 	capabilities = capabilities,
+			-- })
 		end,
 	},
 }

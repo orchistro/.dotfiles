@@ -73,7 +73,7 @@ return {
 						"clangd",
 						"--offset-encoding=utf-16",
 					},
-          filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+					filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 					capabilities = capabilities,
 				}, -- clangd
 				-- pyright = {},
@@ -87,7 +87,7 @@ return {
 								callSnippet = "Replace",
 							},
 							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-							diagnostics = { disable = { 'missing-fields' } },
+							diagnostics = { disable = { "missing-fields" } },
 						},
 					},
 				}, -- lua_ls
@@ -122,8 +122,7 @@ return {
 				},
 			})
 
-      require("lspconfig").protols.setup({}) -- protols는 mason에서 지원되지 않아 servers 변수에 못넣..
-
+			require("lspconfig").protols.setup({}) -- protols는 mason에서 지원되지 않아 servers 변수에 못넣..
 		end, -- config = function
 	},
 } -- return
