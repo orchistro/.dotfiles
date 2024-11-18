@@ -52,18 +52,33 @@ run rm -rf ~/.tmux.conf
 
 run rm -rf ~/.local/share/nvim
 
+echo "########################################################"
+echo "Cleaning up .local/bin/"
+echo "########################################################"
 for f in local/.local/bin/*;do
   run rm -f ~/.local/bin/$(basename $f)
 done
+git checkout local/.local/bin
 
 if [ "$(uname)" == "Linux" ];then
   echo "########################################################"
-  echo "Installing latest nvim"
+  echo "Installing latest nvim for linux"
   echo "########################################################"
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
   rm -rf ~/.local/nvim-linux64
   tar -C ~/.local -xzf nvim-linux64.tar.gz
+  ln -s ~/.local/nvim-linux64/bin/nvim ~/.local/bin/nvim
   rm -f nvim-linux64.tar.gz
+elif [ "$(uname)" == "Darwin" ]; then
+  echo "########################################################"
+  echo "Installing latest nvim for macos"
+  echo "########################################################"
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz
+  rm -rf ~/.local/nvim-macos-arm64
+  xattr -c nvim-macos-arm64.tar.gz
+  tar -C ~/.local -xzf nvim-macos-arm64.tar.gz
+  ln -s ~/.local/nvim-macos-arm64/bin/nvim ~/.local/bin/nvim 
+  rm -f nvim-macos-arm64.tar.gz
 fi
 
 
