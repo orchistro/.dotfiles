@@ -234,6 +234,6 @@ function run_macos_specifics()
 setopt noincappendhistory
 setopt nosharehistory
 
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(/usr/bin/uname)" = "Darwin" ]; then
   sudo pwpolicy -clearaccountpolicies -u USER
 fi
