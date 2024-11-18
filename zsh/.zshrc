@@ -1,3 +1,20 @@
+function run_macos_specifics()
+{
+  # ssh alive interval 조정
+  grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || alert_ssh_alive_interval
+
+  # lock screen으로 들어갔을 때 버벅거리는 문제 해결
+  dscl . readpl /Users/user accountPolicyData history 1>2 2>& /dev/null
+  if [ $? -ne 181 ]; then
+    sudo dscl . deletepl ${HOME} accountPolicyData history
+  fi
+
+  if [ "$(/usr/bin/uname)" = "Darwin" ]; then
+    echo "1803" | sudo -S pwpolicy -clearaccountpolicies -u USER
+  fi
+}
+
+(uname -a | grep Darwin 1> /dev/null) && run_macos_specifics
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -127,7 +144,6 @@ export TZ='Asia/Seoul'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vi="nvim"
-alias vim="nvim"
 alias ll="ls -laF --color"
 alias tmux="tmux -u"
 
@@ -214,26 +230,8 @@ function alert_ssh_alive_interval()
       sudo /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
 }
 
-function run_macos_specifics()
-{
-  # ssh alive interval 조정
-  grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || alert_ssh_alive_interval
-
-  # lock screen으로 들어갔을 때 버벅거리는 문제 해결
-  dscl . readpl /Users/user accountPolicyData history 1>2 2>& /dev/null
-  if [ $? -ne 181 ]; then
-    sudo dscl . deletepl ${HOME} accountPolicyData history
-  fi
-}
-
-(uname -a | grep Darwin 1> /dev/null) && run_macos_specifics
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 setopt noincappendhistory
 setopt nosharehistory
-
-if [ "$(/usr/bin/uname)" = "Darwin" ]; then
-  sudo pwpolicy -clearaccountpolicies -u USER
-fi
