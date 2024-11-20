@@ -1,3 +1,19 @@
+my_passwd="1803"
+
+function alert_ssh_alive_interval()
+{
+    # echo "==============================================================================="
+    # echo "Need to reset ServerAliveInterval in /etc/ssh/ssh_config."
+    # echo "Running Following:"
+    # echo "-------------------------------------------------------------------------------"
+    # echo "grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \\"
+    # echo "sudo /bin/bash -c 'echo -e \"\tServerAliveInterval 30\" >> /etc/ssh/ssh_config'"
+    # echo "==============================================================================="
+
+    grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \
+      echo $my_passwd | sudo -S /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
+}
+
 function run_macos_specifics()
 {
   # ssh alive interval 조정
@@ -10,7 +26,7 @@ function run_macos_specifics()
   fi
 
   if [ "$(/usr/bin/uname)" = "Darwin" ]; then
-    echo "1803" | sudo -S pwpolicy -clearaccountpolicies -u USER
+    echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u USER
   fi
 }
 
@@ -215,20 +231,6 @@ unsetopt autocd
 
 python_venv_activator=$HOME/.venv/bin/activate
 [[ -e $python_venv_activator ]] && source $python_venv_activator
-
-function alert_ssh_alive_interval()
-{
-    # echo "==============================================================================="
-    # echo "Need to reset ServerAliveInterval in /etc/ssh/ssh_config."
-    # echo "Running Following:"
-    # echo "-------------------------------------------------------------------------------"
-    # echo "grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \\"
-    # echo "sudo /bin/bash -c 'echo -e \"\tServerAliveInterval 30\" >> /etc/ssh/ssh_config'"
-    # echo "==============================================================================="
-
-    grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \
-      sudo /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
-}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
