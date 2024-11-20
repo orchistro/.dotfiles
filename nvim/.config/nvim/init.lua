@@ -5,9 +5,16 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.have_nerd_font = true
 
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
 MapCustomKey = function(keys, func, desc, mode)
-  mode = mode or "n"
-  vim.keymap.set(mode, keys, func, { desc = desc })
+	mode = mode or "n"
+	vim.keymap.set(mode, keys, func, { desc = desc })
 end
 
 require("config.lazy")
