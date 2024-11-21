@@ -159,7 +159,7 @@ export TZ='Asia/Seoul'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi="$HOME/.local/bin/nvim"
+alias vi=nvim
 alias ll="ls -laF --color"
 alias tmux="tmux -u"
 
