@@ -60,25 +60,22 @@ for f in local/.local/bin/*;do
 done
 git checkout local/.local/bin
 
+function install_nvim() {
+  local os=$1
+  echo "########################################################"
+  echo "Installing latest nvim for $os"
+  echo "########################################################"
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-$os.tar.gz
+  rm -rf ~/.local/nvim-*
+  tar -C ~/.local -xzf nvim-$os.tar.gz
+  ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
+  rm -f nvim-$os.tar.gz
+}
+
 if [ "$(uname)" == "Linux" ];then
-  echo "########################################################"
-  echo "Installing latest nvim for linux"
-  echo "########################################################"
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-  rm -rf ~/.local/nvim-linux64
-  tar -C ~/.local -xzf nvim-linux64.tar.gz
-  ln -s ~/.local/nvim-linux64/bin/nvim ~/.local/bin/nvim
-  rm -f nvim-linux64.tar.gz
+  install_nvim linux64
 elif [ "$(uname)" == "Darwin" ]; then
-  echo "########################################################"
-  echo "Installing latest nvim for macos"
-  echo "########################################################"
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz
-  rm -rf ~/.local/nvim-macos-arm64
-  xattr -c nvim-macos-arm64.tar.gz
-  tar -C ~/.local -xzf nvim-macos-arm64.tar.gz
-  ln -s ~/.local/nvim-macos-arm64/bin/nvim ~/.local/bin/nvim 
-  rm -f nvim-macos-arm64.tar.gz
+  install_nvim macos-arm64
 fi
 
 
