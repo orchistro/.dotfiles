@@ -84,3 +84,17 @@ echo "########################################################"
 echo "Stow!!!"
 echo "########################################################"
 run stow nvim zsh tmux local
+
+# installing protols for parsing protobuf files
+function install_cargo_protols() {
+  if [ "$(uname)" == "Linux" ];then
+    sudo apt install cargo --yes
+  elif [ "$(uname)" == "Darwin" ]; then
+    sudo port -N install cargo
+  fi
+
+  cargo install protols
+}
+
+cargo --version && cargo install protols || install_cargo_protols
+
