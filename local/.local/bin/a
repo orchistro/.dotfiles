@@ -1,2 +1,7 @@
 #!/bin/bash
-ssh dgw01.nhnsystem.com -l shawnkim
+function run() {
+  echo "$@"
+  eval $@
+}
+
+run ssh dgw01.nhnsystem.com -l shawnkim
