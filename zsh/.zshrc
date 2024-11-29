@@ -238,5 +238,3 @@ python_venv_activator=$HOME/.venv/bin/activate
 
 setopt noincappendhistory
 setopt nosharehistory
-
-unset -f d
