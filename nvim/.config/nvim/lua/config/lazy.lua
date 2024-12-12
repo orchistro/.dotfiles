@@ -19,6 +19,8 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		-- import your plugins
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins" }, -- this copilot
+		{ import = "lazyvim.plugins.extras.ai.copilot" }, -- this copilot
 		{ import = "plugins" },
 	},
 	-- Configure any other settings here. See the documentation for more details.

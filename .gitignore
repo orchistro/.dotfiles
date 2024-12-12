@@ -3,5 +3,6 @@ zsh/.config/
 
 nvim/.config/nvim/lazy-lock.json
 nvim/.config/nvim/.luarc.json
+nvim/.config/nvim/lazyvim.json
 
 local/.local/bin/nvim
