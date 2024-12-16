@@ -6,7 +6,6 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		MapCustomKey("<leader>nt", ":NvimTreeOpen<CR>", "[N]vim[T]ree")
 		-- :hi NvimTreeCursorLine guibg=
 		vim.cmd([[
       :hi NvimTreeCursorLine guibg=#d5d0be

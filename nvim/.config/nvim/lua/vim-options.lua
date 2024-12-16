@@ -17,6 +17,8 @@ vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
 vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
 vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
 
+vim.keymap.set("n", "<F2>", ":NvimTreeOpen<CR>")
+vim.keymap.set("n", "<F3>", ":NvimTreeClose<CR>")
 vim.keymap.set("n", "<F4>", ":cp<CR>")
 vim.keymap.set("n", "<F5>", ":cn<CR>")
 
