@@ -7,7 +7,7 @@ return {
     color_overrides = {
       latte = {
         base =   "#fbf6e4",
-        mantle = "#f5f0de",
+        mantle = "#f1ebd8",
         crust =  "#000000",
       },
     },
