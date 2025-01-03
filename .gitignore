@@ -6,3 +6,6 @@ nvim/.config/nvim/.luarc.json
 nvim/.config/nvim/lazyvim.json
 
 local/.local/bin/nvim
+local/.local/nvim-linux64/
+local/.local/share/
+local/.local/state/
