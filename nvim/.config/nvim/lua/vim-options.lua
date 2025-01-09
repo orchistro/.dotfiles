@@ -12,22 +12,6 @@ vim.cmd("set fileencodings=utf-8")
 
 vim.cmd("set makeprg=cd\\ build\\ &&\\ cmake\\ --build\\ .")
 
-vim.keymap.set("n", "<a-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<a-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<a-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<a-l>", ":wincmd l<CR>")
-
-vim.keymap.set("n", "<F2>", ":NvimTreeOpen<CR>")
-vim.keymap.set("n", "<F3>", ":NvimTreeClose<CR>")
-vim.keymap.set("n", "<F4>", ":cp<CR>")
-vim.keymap.set("n", "<F5>", ":cn<CR>")
-
-vim.keymap.set("n", "<F10>", ":cexpr []<CR>:copen<CR><C-w>J:make<CR>")
-
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
 vim.cmd("noremap <C-U> 3<C-U>")
 vim.cmd("noremap <C-D> 3<C-D>")
 
