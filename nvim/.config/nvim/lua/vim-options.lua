@@ -12,10 +12,10 @@ vim.cmd("set fileencodings=utf-8")
 
 vim.cmd("set makeprg=cd\\ build\\ &&\\ cmake\\ --build\\ .")
 
-vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
+vim.keymap.set("n", "<a-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<a-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<a-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<a-l>", ":wincmd l<CR>")
 
 vim.keymap.set("n", "<F2>", ":NvimTreeOpen<CR>")
 vim.keymap.set("n", "<F3>", ":NvimTreeClose<CR>")
