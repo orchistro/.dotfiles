@@ -20,7 +20,7 @@ function run_macos_specifics()
   grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || alert_ssh_alive_interval
 
   # lock screen으로 들어갔을 때 버벅거리는 문제 해결
-  dscl . readpl /Users/user accountPolicyData history 2>&1 2>& /dev/null
+  dscl . readpl /Users/user accountPolicyData history > /dev/null 2>&1
   if [ $? -ne 181 ]; then
     sudo dscl . deletepl ${HOME} accountPolicyData history
   fi
@@ -238,3 +238,11 @@ python_venv_activator=$HOME/.venv/bin/activate
 
 setopt noincappendhistory
 setopt nosharehistory
+
+# ls colors
+export LS_COLORS=':di=00;34:ex=00;32:ln=00;36'  # for linux
+export LSCOLORS='exgxcxdxcxegedabagacad'        # for macos
+
+# tab completion시 나오는 디렉토리 등에도 ls와 동일 색깔 적용
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
