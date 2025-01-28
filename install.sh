@@ -98,3 +98,8 @@ function install_cargo_protols() {
 
 cargo --version && cargo install protols || install_cargo_protols
 
+echo "########################################################"
+echo "Done!!"
+echo "In case you want to use tmux, you should type <prefix>I"
+echo "inside your tmux session to install tmux plugins"
+echo "########################################################"
