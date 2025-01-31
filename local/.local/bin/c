@@ -3,4 +3,5 @@
 abs=$(cd "$(dirname -- "$0")" >/dev/null; pwd -P)
 source ${abs}/common.inc.sh
 
-run ssh dgw01.nhnsystem.com -l shawnkim
+run ssh localhost -p 3330
+

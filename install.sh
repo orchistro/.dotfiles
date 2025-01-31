@@ -2,20 +2,68 @@
 
 unset ZSH
 
-function run()
-{
-  echo "$@"
+function run() {
+  echo "> [$(pwd)] $@"
   eval "$@"
 }
 
 self_dir=$(cd -- "$(dirname "$0")" > /dev/null 2>&1; pwd -P)
+
+function usage() {
+  cat <<EOF
+Usage: $(basename $0) [OPT]
+
+DESCRIPTION
+       sets up environment
+
+Options:
+  --nocargo  Skip installing cargo and protols
+  --nvim09   Install neovim0.9 instead of latest (for older distros like CentOS7)
+
+EOF
+  exit
+}
+
+ARGS=$(getopt -o 'h' --long 'nocargo,nvim09,help' -n "$(basename $0)" -- "$@") || usage
+eval set -- "${ARGS}"
+
+opt_nocargo=
+opt_nvim09=
+
+while true; do
+  case "$1" in
+    --nocargo)
+      echo "[OPT] no cargo option set"
+      opt_nocargo="nocargo"
+      shift
+      ;;
+    --nvim09)
+      echo "[OPT] neovim 0.9 option set"
+      opt_nvim09="nvim09"
+      shift
+      ;;
+    -h | --help)
+      usage
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      error "unknown option: $1"
+      ;;
+    *)
+      error 'internal error'
+      ;;
+  esac
+done
 
 # oh my zsh
 echo "########################################################"
 echo "Setting up oh my zsh"
 echo "########################################################"
 OMZ_DIR=${self_dir}/zsh/.config/oh-my-zsh
-rm -rf ${OMZ_DIR}
+run rm -rf ${OMZ_DIR}
 # mkdir -p zsh/.config
 ZSH=${OMZ_DIR} sh -c \
   "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
@@ -26,7 +74,7 @@ ZSH=${OMZ_DIR} sh -c \
 echo "########################################################"
 echo "Setting up powerlover10k"
 echo "########################################################"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${OMZ_DIR}/custom/themes/powerlevel10k
+run git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${OMZ_DIR}/custom/themes/powerlevel10k
 
 # tpm
 # tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요
@@ -35,8 +83,8 @@ echo "########################################################"
 echo "Setting up tpm (tmux plugin manager)"
 echo "########################################################"
 TMUX_DIR=${self_dir}/tmux/.config/tmux
-rm -rf ${TMUX_DIR}/plugins
-git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
+run rm -rf ${TMUX_DIR}/plugins
+run git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
 
 # 기존에 설치되어 있을지도 모르는 것들을 제거
 echo "########################################################"
@@ -51,31 +99,51 @@ run rm -rf ~/.tmux
 run rm -rf ~/.tmux.conf
 
 run rm -rf ~/.local/share/nvim
+run rm -rf ~/.local/bin/nvim
 
 echo "########################################################"
-echo "Cleaning up .local/bin/"
+echo "Cleaning up ~/.local/bin/"
 echo "########################################################"
 for f in local/.local/bin/*;do
   run rm -f ~/.local/bin/$(basename $f)
 done
-git checkout local/.local/bin
+run git checkout local/.local/bin
 
-function install_nvim() {
+function install_latest_nvim() {
   local os=$1
   echo "########################################################"
   echo "Installing latest nvim for $os"
   echo "########################################################"
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-$os.tar.gz
-  rm -rf ~/.local/nvim-*
-  tar -C ~/.local -xzf nvim-$os.tar.gz
-  ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
-  rm -f nvim-$os.tar.gz
+  run curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-$os.tar.gz
+  run rm -rf ~/.local/nvim*
+  run tar -C ~/.local -xzf nvim-$os.tar.gz
+  run ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
+  run rm -f nvim-$os.tar.gz
+}
+function install_nvim_0_9() {
+  local os=$1
+  echo "########################################################"
+  echo "Installing old nvim(0.9) for $os"
+  echo "########################################################"
+  run curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-$os.tar.gz
+  run rm -rf ~/.local/nvim*
+  run tar -C ~/.local -xzf nvim-$os.tar.gz
+  run ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
+  run rm -f nvim-$os.tar.gz
 }
 
-if [ "$(uname)" == "Linux" ];then
-  install_nvim linux64
-elif [ "$(uname)" == "Darwin" ]; then
-  install_nvim macos-arm64
+if [ -z ${opt_nvim09+x} ]; then
+  if [ "$(uname)" == "Linux" ]; then
+    install_latest_nvim linux-x86_64
+  elif [ "$(uname)" == "Darwin" ]; then
+    install_latest_nvim macos-arm64
+  fi
+else
+  if [ "$(uname)" == "Linux" ]; then
+    install_nvim_0_9 linux64
+  elif [ "$(uname)" == "Darwin" ]; then
+    install_nvim_0_9 macos
+  fi
 fi
 
 
@@ -85,18 +153,25 @@ echo "Stow!!!"
 echo "########################################################"
 run stow nvim zsh tmux local
 
+echo "########################################################"
+echo "installing cargo for protols"
+echo "########################################################"
 # installing protols for parsing protobuf files
 function install_cargo_protols() {
   if [ "$(uname)" == "Linux" ];then
-    sudo apt install cargo --yes
+    run sudo apt install cargo --yes
   elif [ "$(uname)" == "Darwin" ]; then
-    sudo port -N install cargo
+    run sudo port -N install cargo
   fi
 
   cargo install protols
 }
 
-cargo --version && cargo install protols || install_cargo_protols
+if [ -z ${opt_nocargo+x} ]; then
+  run cargo --version && cargo install protols || install_cargo_protols
+else
+  echo "no cargo"
+fi
 
 echo "########################################################"
 echo "Done!!"
