@@ -246,3 +246,4 @@ export LSCOLORS='exgxcxdxcxegedabagacad'        # for macos
 # tab completion시 나오는 디렉토리 등에도 ls와 동일 색깔 적용
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+unset -f d
