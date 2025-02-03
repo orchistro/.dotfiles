@@ -27,19 +27,19 @@ EOF
 ARGS=$(getopt -o 'h' --long 'nocargo,nvim09,help' -n "$(basename $0)" -- "$@") || usage
 eval set -- "${ARGS}"
 
-opt_nocargo=
-opt_nvim09=
+opt_install_cargo="yes"
+opt_nvim="latest"
 
 while true; do
   case "$1" in
     --nocargo)
       echo "[OPT] no cargo option set"
-      opt_nocargo="nocargo"
+      opt_install_cargo="no"
       shift
       ;;
     --nvim09)
       echo "[OPT] neovim 0.9 option set"
-      opt_nvim09="nvim09"
+      opt_nvim="0.9"
       shift
       ;;
     -h | --help)
@@ -110,40 +110,43 @@ done
 run git checkout local/.local/bin
 
 function install_latest_nvim() {
-  local os=$1
+  local os=
+  if [ "$(uname)" == "Linux" ]; then
+    os="linux-x86_64"
+  elif [ "$(uname)" == "Darwin" ]; then
+    os="macos-arm64"
+  fi
   echo "########################################################"
-  echo "Installing latest nvim for $os"
+  echo "Installing latest nvim for ${os}"
   echo "########################################################"
-  run curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-$os.tar.gz
+  run curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-${os}.tar.gz
   run rm -rf ~/.local/nvim*
-  run tar -C ~/.local -xzf nvim-$os.tar.gz
-  run ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
-  run rm -f nvim-$os.tar.gz
-}
-function install_nvim_0_9() {
-  local os=$1
-  echo "########################################################"
-  echo "Installing old nvim(0.9) for $os"
-  echo "########################################################"
-  run curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-$os.tar.gz
-  run rm -rf ~/.local/nvim*
-  run tar -C ~/.local -xzf nvim-$os.tar.gz
-  run ln -s ~/.local/nvim-$os/bin/nvim ~/.local/bin/nvim
-  run rm -f nvim-$os.tar.gz
+  run tar -C ~/.local -xzf nvim-${os}.tar.gz
+  run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
+  run rm -f nvim-${os}.tar.gz
 }
 
-if [ -z ${opt_nvim09+x} ]; then
+function install_nvim_0_9() {
+  local os=
   if [ "$(uname)" == "Linux" ]; then
-    install_latest_nvim linux-x86_64
+    os="linux64"
   elif [ "$(uname)" == "Darwin" ]; then
-    install_latest_nvim macos-arm64
+    os="macos"
   fi
+  echo "########################################################"
+  echo "Installing old nvim(0.9) for ${os}"
+  echo "########################################################"
+  run curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-${os}.tar.gz
+  run rm -rf ~/.local/nvim*
+  run tar -C ~/.local -xzf nvim-${os}.tar.gz
+  run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
+  run rm -f nvim-${os}.tar.gz
+}
+
+if [ "${opt_nvim}" == "latest" ]; then
+  install_latest_nvim
 else
-  if [ "$(uname)" == "Linux" ]; then
-    install_nvim_0_9 linux64
-  elif [ "$(uname)" == "Darwin" ]; then
-    install_nvim_0_9 macos
-  fi
+  install_nvim_0_9
 fi
 
 
@@ -167,10 +170,8 @@ function install_cargo_protols() {
   cargo install protols
 }
 
-if [ -z ${opt_nocargo+x} ]; then
+if [ "${opt_install_cargo}" == "yes" ]; then
   run cargo --version && cargo install protols || install_cargo_protols
-else
-  echo "no cargo"
 fi
 
 echo "########################################################"
