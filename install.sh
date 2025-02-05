@@ -175,6 +175,20 @@ if [ "${opt_install_cargo}" == "yes" ]; then
 fi
 
 echo "########################################################"
+echo "adding essentials to .bashrc"
+echo "########################################################"
+function clear_bashrc() {
+  begin=$(grep -n '# BEGIN bashrc for orchistro' ~/.bashrc | cut -d : -f 1)
+  end=$(grep -n '# END bashrc for orchistro' ~/.bashrc | cut -d : -f 1)
+  head -n $((begin - 2)) ~/.bashrc > clean_bashrc
+  tail -n +$((end + 2)) ~/.bashrc >> clean_bashrc
+  mv clean_bashrc ~/.bashrc
+}
+
+grep -n '# BEGIN bashrc for orchistro' ~/.bashrc && clear_bashrc
+cat ${self_dir}/bashrc >> ${HOME}/.bashrc
+
+echo "########################################################"
 echo "Done!!"
 echo "In case you want to use tmux, you should type <prefix>I"
 echo "inside your tmux session to install tmux plugins"
