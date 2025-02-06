@@ -175,7 +175,7 @@ if [ "${opt_install_cargo}" == "yes" ]; then
 fi
 
 echo "########################################################"
-echo "adding essentials to .bashrc"
+echo "Configuring bashrc and vimrc"
 echo "########################################################"
 function clear_bashrc() {
   begin=$(grep -n '# BEGIN bashrc for orchistro' ~/.bashrc | cut -d : -f 1)
@@ -187,6 +187,8 @@ function clear_bashrc() {
 
 grep -n '# BEGIN bashrc for orchistro' ~/.bashrc && clear_bashrc
 cat ${self_dir}/bashrc >> ${HOME}/.bashrc
+
+cp ${self_dir}/vimrc ${HOME}/.vimrc
 
 echo "########################################################"
 echo "Done!!"
