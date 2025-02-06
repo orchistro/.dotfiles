@@ -15,7 +15,7 @@ host_name=$(hostname)
 #
 export PS1="\[\033[${prompt_color}m\]\u@${host_name}:\w\$ \[\033[0m\]"
 
-alias gco='git commit'
+alias gco='git checkout'
 alias gst='git status'
 alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
 alias ll='ls -laF --color'
