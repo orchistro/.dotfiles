@@ -18,6 +18,7 @@ MapCustomKey = function(keys, func, desc, mode)
 end
 
 require("config.lazy")
+require("config.keymaps")
 require("vim-options")
 
 -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
