@@ -5,8 +5,8 @@ vim.keymap.set("n", "<a-l>", ":TmuxNavigateRight<CR>")
 vim.keymap.set("n", "<a-h>", ":TmuxNavigateLeft<CR>")
 
 -- nvimtree
-vim.keymap.set("n", "<F2>", ":NvimTreeOpen<CR>")
-vim.keymap.set("n", "<F3>", ":NvimTreeClose<CR>")
+vim.keymap.set("n", "<F2>", ":cp<CR>")
+vim.keymap.set("n", "<F3>", ":cn<CR>")
 
 -- quickfix
 vim.keymap.set("n", "<F4>", ":cp<CR>")
