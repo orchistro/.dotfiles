@@ -24,6 +24,10 @@ return {
         LspReferenceText = { bg = "#FBE0F7" },
         LspReferenceRead = { bg = "#FBE0F7" },
         LspReferenceWrite = { bg = "#FBE0F7" },
+
+        -- Neotree 선택 파일 색상
+        NeoTreeCursorLine = { bg = "#D1F1BF" },
+        
 			}
 		end,
 	},
