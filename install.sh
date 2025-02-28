@@ -17,29 +17,30 @@ DESCRIPTION
        sets up environment
 
 Options:
-  --nocargo  Skip installing cargo and protols
-  --nvim09   Install neovim0.9 instead of latest (for older distros like CentOS7)
+  --cargo           Install cargo and protols
+  --nvim-old-glibc  Install neovim linked with glibc of version less than 2.31.
+                    (For older distros like CentOS7, available only for Linuxes)
 
 EOF
   exit
 }
 
-ARGS=$(getopt -o 'h' --long 'nocargo,nvim09,help' -n "$(basename $0)" -- "$@") || usage
+ARGS=$(getopt -o 'h' --long 'cargo,nvim-old-glibc,help' -n "$(basename $0)" -- "$@") || usage
 eval set -- "${ARGS}"
 
-opt_install_cargo="yes"
+opt_install_cargo="no"
 opt_nvim="latest"
 
 while true; do
   case "$1" in
-    --nocargo)
+    --cargo)
       echo "[OPT] no cargo option set"
-      opt_install_cargo="no"
+      opt_install_cargo="yes"
       shift
       ;;
-    --nvim09)
-      echo "[OPT] neovim 0.9 option set"
-      opt_nvim="0.9"
+    --nvim-old-glibc)
+      echo "[OPT] neovim for older glibc option set"
+      opt_nvim="older-glibc"
       shift
       ;;
     -h | --help)
@@ -57,6 +58,12 @@ while true; do
       ;;
   esac
 done
+
+# checking stow
+echo "########################################################"
+echo "Checking stow"
+echo "########################################################"
+which stow || (echo "You should install GNU stow first.";exit 1)
 
 # oh my zsh
 echo "########################################################"
@@ -126,17 +133,18 @@ function install_latest_nvim() {
   run rm -f nvim-${os}.tar.gz
 }
 
-function install_nvim_0_9() {
+function install_nvim_older_glibc() {
   local os=
   if [ "$(uname)" == "Linux" ]; then
-    os="linux64"
-  elif [ "$(uname)" == "Darwin" ]; then
-    os="macos"
+    os="linux-x86_64"
+  else
+    echo "error: nvim for older glibc is available only for Linux."
+    return
   fi
-  echo "########################################################"
-  echo "Installing old nvim(0.9) for ${os}"
-  echo "########################################################"
-  run curl -LO https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-${os}.tar.gz
+  echo "#################################################################"
+  echo "Installing nvim linked with older glibc(version < 2.31) for ${os}"
+  echo "#################################################################"
+  run curl -LO https://github.com/neovim/neovim-releases/releases/latest/download/nvim-linux-x86_64.tar.gz
   run rm -rf ~/.local/nvim*
   run tar -C ~/.local -xzf nvim-${os}.tar.gz
   run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
@@ -146,7 +154,7 @@ function install_nvim_0_9() {
 if [ "${opt_nvim}" == "latest" ]; then
   install_latest_nvim
 else
-  install_nvim_0_9
+  install_nvim_older_glibc
 fi
 
 
