@@ -17,15 +17,15 @@ DESCRIPTION
        sets up environment
 
 Options:
-  --cargo           Install cargo and protols
-  --nvim-old-glibc  Install neovim linked with glibc of version less than 2.31.
-                    (For older distros like CentOS7, available only for Linuxes)
+  --cargo         Install cargo and protols
+  --nvimoldglibc  Install neovim linked with glibc of version less than 2.31.
+                  (For older distros like CentOS7, available only for Linuxes)
 
 EOF
   exit
 }
 
-ARGS=$(getopt -o 'h' --long 'cargo,nvim-old-glibc,help' -n "$(basename $0)" -- "$@") || usage
+ARGS=$(getopt -o 'h' --long 'cargo,nvimoldglibc,help' -n "$(basename $0)" -- "$@") || usage
 eval set -- "${ARGS}"
 
 opt_install_cargo="no"
@@ -193,7 +193,9 @@ function clear_bashrc() {
   mv clean_bashrc ~/.bashrc
 }
 
-grep -n '# BEGIN bashrc for orchistro' ~/.bashrc && clear_bashrc
+if [[ -e ${HOME}/.bashrc ]]; then
+  grep -n '# BEGIN bashrc for orchistro' ~/.bashrc && clear_bashrc
+fi
 cat ${self_dir}/bashrc >> ${HOME}/.bashrc
 
 cp ${self_dir}/vimrc ${HOME}/.vimrc
