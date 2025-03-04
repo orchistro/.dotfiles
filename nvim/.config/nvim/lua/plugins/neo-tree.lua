@@ -360,7 +360,8 @@ return {
 				},
 			})
 
-			vim.keymap.set("n", "\\", "<Cmd>Neotree action=focus source=filesystem position=left toggle=true <CR>")
+			vim.keymap.set("n", "\\", "<Cmd>Neotree action=focus source=filesystem position=left toggle=true<CR>")
+			vim.keymap.set("n", "|", "<Cmd>Neotree reveal_force_cwd<CR>")
 			vim.keymap.set("n", "<leader>b", "<Cmd>Neotree float buffers toggle<CR>")
 		end,
 	},
