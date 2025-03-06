@@ -163,7 +163,7 @@ alias vi=nvim
 alias vim=nvim
 alias ll="ls -laF --color"
 alias tmux="tmux -u"
-which fdfind && alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
+which fdfind > /dev/null 2>&1 && alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
 
 source ${HOME}/.p10k.zsh
 
