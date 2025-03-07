@@ -22,6 +22,7 @@ alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgre
 alias ll='ls -laF --color'
 
 alias kubectl="minikube kubectl --"
+which fdfind > /dev/null 2>&1 && alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
 
 ##########################
 # END bashrc for orchistro
