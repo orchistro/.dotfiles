@@ -360,9 +360,24 @@ return {
 				},
 			})
 
-			vim.keymap.set("n", "\\", "<Cmd>Neotree action=focus source=filesystem position=left toggle=true<CR>")
-			vim.keymap.set("n", "|", "<Cmd>Neotree action=show reveal_force_cwd<CR>")
-			vim.keymap.set("n", "<leader>b", "<Cmd>Neotree float buffers toggle<CR>")
+			vim.keymap.set(
+				"n",
+				"<leader>nt",
+				"<Cmd>Neotree action=focus source=filesystem position=left toggle=true<CR>",
+				{ desc = "[N]eo-tree [t]oggle" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>nr",
+				"<Cmd>Neotree action=show reveal_force_cwd<CR>",
+				{ desc = "[N]eo-tree [r]eveal current file" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>nb",
+				"<Cmd>Neotree float buffers toggle<CR>",
+				{ desc = "[N]eo-tree float [b]uffers" }
+			)
 		end,
 	},
 }
