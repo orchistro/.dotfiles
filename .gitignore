@@ -8,6 +8,7 @@ nvim/.config/nvim/lazyvim.json
 local/.local/bin/nvim
 local/.local/bin/uv
 local/.local/bin/uvx
+local/.local/bin/nubescli
 local/.local/nvim-linux64/
 local/.local/nvim-linux-x86_64/
 local/.local/share/
