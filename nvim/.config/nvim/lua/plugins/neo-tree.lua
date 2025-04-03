@@ -371,7 +371,7 @@ return {
 			vim.keymap.set(
 				"n",
 				"<leader>nt",
-				"<Cmd>Neotree action=focus source=filesystem position=left toggle=true<CR>",
+				"<Cmd>Neotree action=focus source=filesystem position=left toggle=true<CR><C-W><C-=>",
 				{ desc = "[N]eo-tree [t]oggle" }
 			)
 			vim.keymap.set(
