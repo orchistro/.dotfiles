@@ -83,6 +83,12 @@ echo "Setting up powerlover10k"
 echo "########################################################"
 run git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${OMZ_DIR}/custom/themes/powerlevel10k
 
+# zsh-syntax-highlighting
+echo "########################################################"
+echo "Setting up powerlover10k"
+echo "########################################################"
+run git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${OMZ_DIR}/plugins/zsh-syntax-highlighting
+
 # tpm
 # tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요
 # tpm은 수동으로 설치
