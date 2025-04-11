@@ -30,3 +30,7 @@ cargo install protols
 * install [GNU Stow](https://www.gnu.org/software/stow/) to install `.` files.
 (Most linux distros do not have this program, you may need to install it yourself)
 * run `install.sh`
+
+# DAP
+nvim-dap wiki page ([Debug Adapter installation](https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation)) introduces 4 debugger adaptor: gdb native, codelldb, lldb-vscode, and vscode-cpptools.
+My nvim configuration uses codelldb
