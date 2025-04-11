@@ -4,7 +4,12 @@ unset ZSH
 
 function run() {
   echo "> [$(pwd)] $@"
-  eval "$@"
+  eval $@
+}
+
+function error() {
+  >&2 echo $@
+  exit 1
 }
 
 self_dir=$(cd -- "$(dirname "$0")" > /dev/null 2>&1; pwd -P)
@@ -38,7 +43,7 @@ while true; do
       opt_install_cargo="yes"
       shift
       ;;
-    --nvim-old-glibc)
+    --nvimoldglibc)
       echo "[OPT] neovim for older glibc option set"
       opt_nvim="older-glibc"
       shift
@@ -54,7 +59,7 @@ while true; do
       error "unknown option: $1"
       ;;
     *)
-      error 'internal error'
+      error "internal error"
       ;;
   esac
 done
@@ -77,13 +82,13 @@ ZSH=${OMZ_DIR} sh -c \
   "" \
   --unattended
 
-# powerlevel10k
 echo "########################################################"
 echo "Setting up zsh plugins"
 echo "########################################################"
 run git clone --depth=1 https://github.com/romkatv/powerlevel10k.git    ${OMZ_DIR}/custom/themes/powerlevel10k
 run git clone https://github.com/zsh-users/zsh-syntax-highlighting.git  ${OMZ_DIR}/plugins/zsh-syntax-highlighting
 run git clone https://github.com/zsh-users/zsh-autosuggestions          ${OMZ_DIR}/plugins/zsh-autosuggestions
+run cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
 
 # tpm
 # tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요

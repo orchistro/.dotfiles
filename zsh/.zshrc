@@ -251,5 +251,3 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 unset -f d
 
 unset TMOUT # 쉘 타임아웃으로 인한 자동 로그아웃 방지
-
-bindkey '^Y' autosuggest-accept
