@@ -903,7 +903,8 @@
   # Context color in SSH without privileges.
   typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=180
   # Default context color (no privileges, no SSH).
-  typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=210
+  # 주석처리해서 아래의 prompt_context() 함수에서 설정한 p10k segment 명령의 색상 설정이 먹도록 한다
+  # typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=210
 
   # Context format when running with privileges: bold user@hostname.
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE=' %B%n@%m'
@@ -1712,9 +1713,20 @@
 function prompt_context() {
   local short_host="${HOST[0,6]}"
   if [[ ${OSTYPE} == darwin* ]]; then
-    p10k segment -t "%B%n@${short_host}"
+    p10k segment -f 214 -t "%B%n@local"
   else
-    p10k segment -t "%B%n@${short_host}"
+    if [[ ${OSTYPE} == linux* ]]; then
+      distro=$(lsb_release -si)
+      if [[ ${distro} == Ubuntu ]]; then
+        p10k segment -f 210 -t "%B%n@${short_host}"
+      else
+        if [[ ${distro} == Navix ]]; then
+          p10k segment -f 099 -t "%B%n@${short_host}"
+        else
+          p10k segment -f 033 -t "%B%n@${short_host}"
+        fi
+      fi
+    fi
   fi
 }
 
