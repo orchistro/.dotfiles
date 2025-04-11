@@ -1711,9 +1711,10 @@
 }
 
 function prompt_context() {
-  local short_host="${HOST[0,6]}"
+  local short_host=${HOST%%[^a-zA-Z0-9]*}
+
   if [[ ${OSTYPE} == darwin* ]]; then
-    p10k segment -f 214 -t "%B%n@local"
+    p10k segment -f 214 -t "%B%n@${short_host}"
   else
     if [[ ${OSTYPE} == linux* ]]; then
       distro=$(lsb_release -si)
