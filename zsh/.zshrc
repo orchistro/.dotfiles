@@ -126,14 +126,14 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-export LANG="ko_KR.UTF-8"
+unset LC_ALL                    # LC_ALL을 unset해 주는 것이 선행되어야 아래의 locale variable이 올바로 설정된다.
+unset LANG
 export LC_COLLATE="ko_KR.UTF-8"
-export LC_CTYPE="C"
+export LC_CTYPE="ko_KR.UTF-8"   # macos ls 실행시 한글 파일이름이 ???로 나오는 문제 해결
 export LC_MESSAGES="C"
 export LC_MONETARY="ko_KR.UTF-8"
 export LC_NUMERIC="ko_KR.UTF-8"
-export LC_TIME="ko_KR.UTF-8"
-export LC_ALL=""
+export LC_TIME="en_US.UTF-8"    # macos ls -l 실행시 날짜가 3 7 2025 이런식으로 나오지 않고 Mar 7 2025 이렇게 나오도록
 
 export TZ='Asia/Seoul'
 
