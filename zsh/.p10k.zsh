@@ -1712,9 +1712,9 @@
 function prompt_context() {
   local short_host="${HOST[0,6]}"
   if [[ ${OSTYPE} == darwin* ]]; then
-    p10k segment -t " %B%n@${short_host}"
+    p10k segment -t "%B%n@${short_host}"
   else
-    p10k segment -t " %B%n@${short_host}"
+    p10k segment -t "%B%n@${short_host}"
   fi
 }
 
