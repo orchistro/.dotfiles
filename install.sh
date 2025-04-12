@@ -190,6 +190,18 @@ if [ "${opt_install_cargo}" == "yes" ]; then
 fi
 
 echo "########################################################"
+echo "Installing codelldb"
+echo "########################################################"
+run mkdir -p ~/.local/codelldb
+run curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/codelldb-linux-x64.vsix
+run mv codelldb-linux-x64.vsix ~/.local/codelldb
+run cd ~/.local/codelldb
+run unzip codelldb-linux-x64.vsix
+cat >> ~/.zshrc << EOF
+export PATH=${PATH}:${HOME}/.local/codelldb/extension/adapter
+EOF
+
+echo "########################################################"
 echo "Configuring bashrc and vimrc"
 echo "########################################################"
 function clear_bashrc() {
