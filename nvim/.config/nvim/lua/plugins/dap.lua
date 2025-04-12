@@ -74,8 +74,8 @@ return {
 				require("dapui").eval(nil, { enter = true })
 			end, { desc = "[D]AP Inspect[?] variable under cursor" })
 
-			vim.keymap.set("n", "<F6>", dap.step_over)
-			vim.keymap.set("n", "<F7>", dap.step_into)
+			vim.keymap.set("n", "<F6>", dap.step_into)
+			vim.keymap.set("n", "<F7>", dap.step_over)
 			vim.keymap.set("n", "<F8>", dap.step_out)
 
 			dap.listeners.before.attach.dapui_config = function()
