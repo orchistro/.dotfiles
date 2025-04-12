@@ -23,3 +23,6 @@ require("vim-options")
 
 -- catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 vim.cmd.colorscheme("catppuccin-latte")
+
+-- nvim-dap-ui 에서 현재 실행 중인 라인을 표시하는 색상.
+vim.api.nvim_set_hl(0, "DapStopped", { bg = "#F6DAF4" })
