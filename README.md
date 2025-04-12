@@ -34,3 +34,5 @@ cargo install protols
 # DAP
 nvim-dap wiki page ([Debug Adapter installation](https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation)) introduces 4 debug adaptor: gdb native, codelldb, lldb-vscode, and vscode-cpptools.
 My nvim configuration uses codelldb
+
+Currently installing codelldb directly. Need to have mason to handle installing adapters. 
