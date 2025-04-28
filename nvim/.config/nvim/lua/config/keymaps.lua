@@ -13,7 +13,8 @@ vim.keymap.set("n", "<F4>", ":cp<CR>")
 vim.keymap.set("n", "<F5>", ":cn<CR>")
 
 -- Make
-vim.keymap.set("n", "<F10>", ":cexpr []<CR>:copen<CR><C-w>J:make<CR>")
+-- vim.keymap.set("n", "<F10>", ":cexpr []<CR>:copen<CR><C-w>J:make<CR>")
+vim.keymap.set("n", "<F10>", ":make<CR>")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`

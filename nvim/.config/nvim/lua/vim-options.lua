@@ -9,7 +9,7 @@ vim.cmd("set encoding=utf-8")
 vim.cmd("set fileencoding=utf-8")
 vim.cmd("set fileencodings=utf-8")
 
-vim.cmd("set makeprg=cd\\ build\\ &&\\ cmake\\ --build\\ .")
+vim.cmd("set makeprg=cmake\\ --build\\ build")
 
 vim.cmd("noremap <C-U> 3<C-U>")
 vim.cmd("noremap <C-D> 3<C-D>")
