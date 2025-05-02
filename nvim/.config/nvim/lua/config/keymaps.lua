@@ -34,3 +34,17 @@ vim.keymap.set("n", "<S-F12>", ":%s/\\s\\+$//g<CR>")
 
 -- Move to the beginning of the line in command mode
 vim.keymap.set("c", "<C-A>", "<Home>")
+
+vim.keymap.set(
+	"n",
+	"<C-w><C-]>",
+	":vertical stag <C-R><C-W><CR>",
+	{ desc = "Open vertical split window and jump to the tag definition" }
+)
+
+vim.keymap.set(
+	"n",
+	"<C-w>]",
+	":stag <C-R><C-W><CR>",
+	{ desc = "Open split window and jump to the tag definition" }
+)
