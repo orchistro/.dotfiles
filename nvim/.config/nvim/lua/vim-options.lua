@@ -11,16 +11,6 @@ vim.cmd("set fileencodings=utf-8")
 
 vim.cmd("set makeprg=cmake\\ --build\\ build")
 
-vim.cmd("noremap <C-U> 3<C-U>")
-vim.cmd("noremap <C-D> 3<C-D>")
-
-vim.cmd("inoremap <C-E> <C-O><C-E>")
-vim.cmd("inoremap <C-Y> <C-O><C-Y>")
-
-vim.cmd("cnoremap <C-A> <Home>")
-vim.cmd("nnoremap <F24> :%s/\\s\\+$//g<CR>")
-vim.cmd("nnoremap <S-F12> :%s/\\s\\+$//g<CR>")
-
 -- Decrease update time
 vim.opt.updatetime = 250
 
