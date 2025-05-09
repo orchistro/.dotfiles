@@ -11,6 +11,7 @@ return {
 			},
 		})
 		vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+		vim.keymap.set("n", "<C-W>d", "<cmd>Lspsaga show_line_diagnostics<CR>")
 	end,
 
 	dependencies = {

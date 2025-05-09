@@ -159,8 +159,7 @@ export TZ='Asia/Seoul'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi=nvim
-alias vim=nvim
+alias vi="LANG=ko_KR.UTF-8 nvim"  # clangd 에서 AST 관련 오류 발생 방지하기 위해서 LANG 변수 지정
 alias ll="ls -laF --color"
 alias tmux="tmux -u"
 which fdfind > /dev/null 2>&1 &&      alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
@@ -252,7 +251,7 @@ unset -f d
 
 unset TMOUT # 쉘 타임아웃으로 인한 자동 로그아웃 방지
 
-export GIT_EDITOR=nvim
+export GIT_EDITOR="LANG=ko_KR.UTF-8 nvim"
 
 export DOTHOST=localhost
 export BUTLERPORT=15034
