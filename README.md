@@ -13,11 +13,8 @@ cargo install protols
 ```bash
 sudo port install stow
 ```
-* ~install [Neovim](https://neovim.io/)~ the `install.sh` script downloads the latest neovim and put it in `.local/bin/`
-```bash
-sudo port install neovim
-```
 * run `install.sh`
+* note that you don't need to install neovim. The `install.sh` script downloads the latest neovim and put it in `.local/bin/`.
 
 ## Linux (ubuntu)
 * install [zsh](https://www.zsh.org/)
