@@ -23,6 +23,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Scroll the screen without moving the cursor
 vim.keymap.set("n", "<C-U>", "3<C-U>")
 vim.keymap.set("n", "<C-D>", "3<C-D>")
+vim.keymap.set("v", "<C-U>", "3<C-U>")
+vim.keymap.set("v", "<C-D>", "3<C-D>")
 
 -- Scroll the screen up/down with cursor
 vim.keymap.set("i", "<C-E>", "<C-O><C-E>")
