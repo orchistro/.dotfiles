@@ -167,6 +167,7 @@ alias tmux="tmux -u"
 which fdfind > /dev/null 2>&1 &&      alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
 which pygmentize > /dev/null 2>&1 &&  alias ccat=pygmentize # syntax highlight가 적용된 cat
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ${HOME}/.config/zsh/.p10k.zsh
 
 hostname=$(hostname)
@@ -236,9 +237,6 @@ unsetopt autocd
 python_venv_activator=$HOME/.venv/bin/activate
 [[ -e $python_venv_activator ]] && source $python_venv_activator
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 setopt noincappendhistory
 setopt nosharehistory
 
@@ -255,11 +253,8 @@ unset TMOUT # 쉘 타임아웃으로 인한 자동 로그아웃 방지
 
 export GIT_EDITOR="LANG=ko_KR.UTF-8 nvim"
 
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+
 export DOTHOST=localhost
 export BUTLERPORT=15034
 export SERVERPORT=15035
-
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state

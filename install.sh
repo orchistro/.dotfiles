@@ -82,6 +82,8 @@ ZSH=${OMZ_DIR} sh -c \
   "" \
   --unattended
 
+mkdir -p $HOME/.local/state/zsh # for zsh history
+
 echo "########################################################"
 echo "Setting up zsh plugins"
 echo "########################################################"
