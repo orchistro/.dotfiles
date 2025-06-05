@@ -73,23 +73,32 @@ if ! command -v "stow" >/dev/null 2>&1; then
   exit 1
 fi
 
+function prepdir() {
+  local parent=$1
+  shift 1
+  local dirs=( $@ )
+
+  for d in ${dirs[@]}; do
+    run rm -rf ${HOME}/${parent}/${d}
+    run mkdir -p ${HOME}/${parent}/${d}
+  done
+}
+
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-DIRS=(zsh nvim tmux)
-for d in ${DIRS[@]}; do
-  run rm -rf ${HOME}/.config/${d}
-  run mkdir -p ${HOME}/.config/${d}
-done
+prepdir .config zsh nvim tmux
+
+echo "########################################################"
+echo "Preparing .local directory"
+echo "########################################################"
+prepdir .local share state
+mkdir -p ${HOME}/.local/bin
 
 echo "########################################################"
 echo "Preparing .local/state directory"
 echo "########################################################"
-DIRS=(zsh)
-for d in ${DIRS[@]}; do
-  run rm -rf ${HOME}/.local/state/${d}
-  run mkdir -p ${HOME}/.local/state/${d}
-done
+prepdir .local/state zsh
 
 # oh my zsh
 echo "########################################################"
@@ -189,8 +198,11 @@ fi
 echo "########################################################"
 echo "Stow!!!"
 echo "########################################################"
-run stow -D nvim zsh tmux local # 먼저 지운 후에
-run stow nvim zsh tmux local    # 설치
+# run stow -D nvim zsh tmux local # 먼저 지운 후에
+run stow nvim
+run stow zsh
+run stow tmux
+run stow local
 
 echo "########################################################"
 echo "installing cargo for protols"
@@ -218,7 +230,7 @@ run mkdir -p ~/.local/codelldb
 run curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/codelldb-linux-x64.vsix
 run mv codelldb-linux-x64.vsix ~/.local/codelldb
 run cd ~/.local/codelldb
-run unzip codelldb-linux-x64.vsix
+run unzip -q codelldb-linux-x64.vsix
 
 echo "########################################################"
 echo "Configuring bashrc and vimrc"
