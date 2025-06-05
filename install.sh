@@ -68,7 +68,28 @@ done
 echo "########################################################"
 echo "Checking stow"
 echo "########################################################"
-which stow || (echo "You should install GNU stow first.";exit 1)
+if ! command -v "stow" >/dev/null 2>&1; then
+  echo "❌ GNU stow not found. Aborting."
+  exit 1
+fi
+
+echo "########################################################"
+echo "Preparing .config directory"
+echo "########################################################"
+DIRS=(zsh nvim tmux)
+for d in ${DIRS[@]}; do
+  run rm -rf ${HOME}/.config/${d}
+  run mkdir -p ${HOME}/.config/${d}
+done
+
+echo "########################################################"
+echo "Preparing .local/state directory"
+echo "########################################################"
+DIRS=(zsh)
+for d in ${DIRS[@]}; do
+  run rm -rf ${HOME}/.local/state/${d}
+  run mkdir -p ${HOME}/.local/state/${d}
+done
 
 # oh my zsh
 echo "########################################################"
@@ -81,8 +102,6 @@ ZSH=${OMZ_DIR} sh -c \
   "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   "" \
   --unattended
-
-mkdir -p $HOME/.local/state/zsh # for zsh history
 
 echo "########################################################"
 echo "Setting up zsh plugins"
