@@ -164,12 +164,12 @@ else
   install_nvim_older_glibc
 fi
 
-
 # GNU stow 로 링크!
 echo "########################################################"
 echo "Stow!!!"
 echo "########################################################"
-run stow nvim zsh tmux local
+run stow -D nvim zsh tmux local # 먼저 지운 후에
+run stow nvim zsh tmux local    # 설치
 
 echo "########################################################"
 echo "installing cargo for protols"

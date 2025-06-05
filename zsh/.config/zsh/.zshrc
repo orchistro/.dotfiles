@@ -167,7 +167,7 @@ alias tmux="tmux -u"
 which fdfind > /dev/null 2>&1 &&      alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
 which pygmentize > /dev/null 2>&1 &&  alias ccat=pygmentize # syntax highlight가 적용된 cat
 
-source ${HOME}/.p10k.zsh
+source ${HOME}/.config/zsh/.p10k.zsh
 
 hostname=$(hostname)
 me=$(whoami)
