@@ -67,11 +67,16 @@ done
 # checking stow
 echo "########################################################"
 echo "Checking stow"
-echo "########################################################"
-if ! command -v "stow" >/dev/null 2>&1; then
-  echo "❌ GNU stow not found. Aborting."
-  exit 1
+STOW=stow
+if ! command -v ${STOW} >/dev/null 2>&1; then
+  STOW=/opt/local/bin/stow
+  if ! command -v ${STOW} >/dev/null 2>&1; then
+    echo "❌ GNU stow not found. Aborting."
+    exit 1
+  fi
 fi
+echo "..OK"
+echo "########################################################"
 
 function prepdir() {
   local parent=$1
@@ -104,9 +109,8 @@ prepdir .local/state zsh
 echo "########################################################"
 echo "Setting up oh my zsh"
 echo "########################################################"
-OMZ_DIR=${self_dir}/zsh/.config/oh-my-zsh
+OMZ_DIR=${HOME}/.config/oh-my-zsh
 run rm -rf ${OMZ_DIR}
-# mkdir -p zsh/.config
 ZSH=${OMZ_DIR} sh -c \
   "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   "" \
@@ -126,19 +130,35 @@ run cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
 echo "########################################################"
 echo "Setting up tpm (tmux plugin manager)"
 echo "########################################################"
-TMUX_DIR=${self_dir}/tmux/.config/tmux
-run rm -rf ${TMUX_DIR}/plugins
+TMUX_DIR=${HOME}/.config/tmux
+run rm -rf ${TMUX_DIR}
+run mkdir ${TMUX_DIR}
 run git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
+
+# .local/bin 은 디렉토리여야만 한다.
+# 각 시스템 고유의 bin이 필요하면 설치할 것이고,
+# 그것들이 repo에 들어와서는 안되기 때문
+# 이미 디렉토리로 존재하면 그냥 두고, 그렇지 않으면 디렉토리를 만들어 주어서
+# bin 통째로 링크가 걸리는 것은 막아야 한다
+echo "########################################################"
+echo "Preparing .local/bin"
+echo "########################################################"
+if [ ! -e ${HOME}/.local/bin ]; then
+  mkdir -p ${HOME}/.local/bin
+fi
+
+if [ -L ${HOME}/.local/bin ]; then
+  rm -f ${HOME}/.local/bin
+  mkdir -p ${HOME}/.local/bin
+fi
 
 # 기존에 설치되어 있을지도 모르는 것들을 제거
 echo "########################################################"
 echo "Cleaning up installations that might have been installed"
 echo "########################################################"
 run rm -f ~/.zshrc*  # OMZ 설치시 만들어준 .zshrc제거 (추후 stow로 zshrc 설치할 것임)
-run rm -rf ~/.config/nvim
-run rm -rf ~/.config/oh-my-zsh
+
 run rm -rf ~/.oh-my-zsh
-run rm -rf ~/.config/tmux
 run rm -rf ~/.tmux
 run rm -rf ~/.tmux.conf
 
@@ -146,12 +166,16 @@ run rm -rf ~/.local/share/nvim
 run rm -rf ~/.local/bin/nvim
 
 echo "########################################################"
-echo "Cleaning up ~/.local/bin/"
+echo "Installing nvim"
 echo "########################################################"
-for f in local/.local/bin/*;do
-  run rm -f ~/.local/bin/$(basename $f)
-done
-run git checkout local/.local/bin
+
+run rm -rf ${HOME}/.local/nvim*
+
+# nvim 실행시 생성되는 lock파일 등이 repo에 생성되는 것을 막으려면
+# .config/vim 디렉토리를 생성해 두어서 .config/nvim이 디렉토리 통째로
+# 링크가 걸리는 것을 막아야 한다
+run rm -rf ${HOME}/.config/nvim
+run mkdir -p ${HOME}/.config/nvim
 
 function install_latest_nvim() {
   local os=
@@ -160,11 +184,8 @@ function install_latest_nvim() {
   elif [ "$(uname)" == "Darwin" ]; then
     os="macos-arm64"
   fi
-  echo "########################################################"
   echo "Installing latest nvim for ${os}"
-  echo "########################################################"
   run curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-${os}.tar.gz
-  run rm -rf ~/.local/nvim*
   run tar -C ~/.local -xzf nvim-${os}.tar.gz
   run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
   run rm -f nvim-${os}.tar.gz
@@ -178,11 +199,8 @@ function install_nvim_older_glibc() {
     echo "error: nvim for older glibc is available only for Linux."
     return
   fi
-  echo "#################################################################"
   echo "Installing nvim linked with older glibc(version < 2.31) for ${os}"
-  echo "#################################################################"
   run curl -LO https://github.com/neovim/neovim-releases/releases/latest/download/nvim-linux-x86_64.tar.gz
-  run rm -rf ~/.local/nvim*
   run tar -C ~/.local -xzf nvim-${os}.tar.gz
   run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
   run rm -f nvim-${os}.tar.gz
@@ -199,10 +217,10 @@ echo "########################################################"
 echo "Stow!!!"
 echo "########################################################"
 # run stow -D nvim zsh tmux local # 먼저 지운 후에
-run stow nvim
-run stow zsh
-run stow tmux
-run stow local
+run ${STOW} nvim
+run ${STOW} zsh
+run ${STOW} tmux
+run ${STOW} local
 
 echo "########################################################"
 echo "installing cargo for protols"
