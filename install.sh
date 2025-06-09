@@ -98,7 +98,6 @@ echo "########################################################"
 echo "Preparing .local directory"
 echo "########################################################"
 prepdir .local share state
-mkdir -p ${HOME}/.local/bin
 
 echo "########################################################"
 echo "Preparing .local/state directory"
@@ -162,7 +161,6 @@ run rm -rf ~/.oh-my-zsh
 run rm -rf ~/.tmux
 run rm -rf ~/.tmux.conf
 
-run rm -rf ~/.local/share/nvim
 run rm -rf ~/.local/bin/nvim
 
 echo "########################################################"
