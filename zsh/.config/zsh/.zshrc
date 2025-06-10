@@ -240,8 +240,8 @@ function omz_termsupport_preexec {
 # disabling AUTO_CD zsh feature
 unsetopt autocd
 
-python_venv_activator=$HOME/.venv/bin/activate
-[[ -e $python_venv_activator ]] && source $python_venv_activator
+python_venv_activator=${HOME}/.venv/bin/activate
+[[ -e ${python_venv_activator} ]] && source ${python_venv_activator}
 
 setopt noincappendhistory
 setopt nosharehistory
@@ -259,8 +259,10 @@ unset TMOUT # 쉘 타임아웃으로 인한 자동 로그아웃 방지
 
 export GIT_EDITOR="LANG=ko_KR.UTF-8 nvim"
 
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 
 export DOTHOST=localhost
 export BUTLERPORT=15034
 export SERVERPORT=15035
+
+export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"

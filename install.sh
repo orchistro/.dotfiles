@@ -103,6 +103,7 @@ echo "########################################################"
 echo "Preparing .local/state directory"
 echo "########################################################"
 prepdir .local/state zsh
+prepdir .local/state less
 
 # oh my zsh
 echo "########################################################"
