@@ -1711,20 +1711,27 @@
 }
 
 function prompt_context() {
-  local short_host=${HOST%%[^a-zA-Z0-9]*}
+  if [[ "${HOST}" == *-ncl ]]; then
+    local short_host=${HOST%-ncl} # dev-shawn-minikube02-ncl -> dev-shawn-minikube02
+    short_host=${short_host##[a-zA-Z0-9]*-} # dev-shawn-minikube02 -> minikube02
+  else
+    local short_host=${HOST%%.[.a-zA-Z0-9]*} # AD8352-yhmbp32.nfra-naver03.24.io -> AD8352-yhmbp32
+  fi
+
+  short_host=${short_host##[a-zA-Z0-9]*-} # AD8352-yhmbp32 -> yhmbp32 / dev-shawn-minikube02 -> minikube02
 
   if [[ ${OSTYPE} == darwin* ]]; then
-    p10k segment -f 214 -t "%B%n@${short_host}"
+    p10k segment -f 214 -t "%B%n@${short_host}" # 214: 주황색 컬러
   else
     if [[ ${OSTYPE} == linux* ]]; then
       distro=$(lsb_release -si)
       if [[ ${distro} == Ubuntu ]]; then
-        p10k segment -f 210 -t "%B%n@${short_host}"
+        p10k segment -f 210 -t "%B%n@${short_host}" # 210: 핑크색
       else
         if [[ ${distro} == Navix ]]; then
-          p10k segment -f 099 -t "%B%n@${short_host}"
+          p10k segment -f 099 -t "%B%n@${short_host}" # 099: 보라색 컬러
         else
-          p10k segment -f 033 -t "%B%n@${short_host}"
+          p10k segment -f 033 -t "%B%n@${short_host}" # 033: 푸른색 컬러
         fi
       fi
     fi

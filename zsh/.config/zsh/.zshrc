@@ -164,8 +164,14 @@ export TZ='Asia/Seoul'
 alias vi="LANG=ko_KR.UTF-8 nvim"  # clangd 에서 AST 관련 오류 발생 방지하기 위해서 LANG 변수 지정
 alias ll="ls -laF --color"
 alias tmux="tmux -u"
-which fdfind > /dev/null 2>&1 &&      alias fd=fdfind # fdfind가 있을 경우에만 fd alias를 설정
-which pygmentize > /dev/null 2>&1 &&  alias ccat=pygmentize # syntax highlight가 적용된 cat
+
+if command -v fdfind >/dev/null 2>&1; then
+  alias fd='fdfind'
+fi
+
+if command -v pygmentize >/dev/null 2>&1; then
+  alias ccat='pygmentize' # syntax highlight가 적용된 cat
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source ${HOME}/.config/zsh/.p10k.zsh
