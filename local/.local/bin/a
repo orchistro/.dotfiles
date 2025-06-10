@@ -1,9 +1,0 @@
-#!/bin/bash
-
-port=${1:-3330}
-
-abs=$(cd "$(dirname -- "$0")" >/dev/null; pwd -P)
-source ${abs}/common.inc.sh
-
-run ssh localhost -p ${port}
-
