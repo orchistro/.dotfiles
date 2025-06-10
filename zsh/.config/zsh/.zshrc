@@ -266,3 +266,5 @@ export BUTLERPORT=15034
 export SERVERPORT=15035
 
 export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh

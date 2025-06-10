@@ -97,7 +97,7 @@ prepdir .config zsh nvim tmux
 echo "########################################################"
 echo "Preparing .local directory"
 echo "########################################################"
-prepdir .local share state
+prepdir .local share state fzf
 
 echo "########################################################"
 echo "Preparing .local/state directory"
@@ -238,6 +238,13 @@ function install_cargo_protols() {
 if [ "${opt_install_cargo}" == "yes" ]; then
   run cargo --version && cargo install protols || install_cargo_protols
 fi
+
+echo "########################################################"
+echo "Installing fzf"
+echo "########################################################"
+FZF_DIR=${HOME}/.local/fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ${FZF_DIR}
+${FZF_DIR}/install --xdg --key-bindings --completion --no-update-rc
 
 echo "########################################################"
 echo "Installing codelldb"
