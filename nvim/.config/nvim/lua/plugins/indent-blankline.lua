@@ -6,14 +6,14 @@ return {
 		local ibl = require("ibl")
 		local c = "▏"
 		ibl.setup({
-			scope = { enabled = true },
+			scope = { enabled = false },
 			indent = { char = " " },
 			-- indent = { char = "┊" },
 		})
 
 		vim.keymap.set("n", "<leader>if", function()
 			ibl.setup({
-				scope = { enabled = true },
+				scope = { enabled = false },
 				indent = { char = " " },
 			})
 		end, { silent = true, desc = "[I]ndent-blankline O[f]f" })
