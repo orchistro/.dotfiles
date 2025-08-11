@@ -251,7 +251,7 @@ ${FZF_DIR}/install --xdg --key-bindings --completion --no-update-rc
 echo "########################################################"
 echo "Installing fzf-tab"
 echo "########################################################"
-git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-${XDG_CONFIG_HOME}/.oh-my-zsh/custom}/plugins/fzf-tab
+git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-${OMZ_DIR}/custom}/plugins/fzf-tab
 
 echo "########################################################"
 echo "Installing codelldb"
