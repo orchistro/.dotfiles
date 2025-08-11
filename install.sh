@@ -14,6 +14,8 @@ function error() {
 
 self_dir=$(cd -- "$(dirname "$0")" > /dev/null 2>&1; pwd -P)
 
+source ${self_dir}/zsh/.zshenv # XDG_* definitions
+
 function usage() {
   cat <<EOF
 Usage: $(basename $0) [OPT]
@@ -109,7 +111,7 @@ prepdir .local/state less
 echo "########################################################"
 echo "Setting up oh my zsh"
 echo "########################################################"
-OMZ_DIR=${HOME}/.config/oh-my-zsh
+OMZ_DIR=${XDG_CONFIG_HOME}/oh-my-zsh
 run rm -rf ${OMZ_DIR}
 ZSH=${OMZ_DIR} sh -c \
   "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
@@ -130,7 +132,7 @@ run cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
 echo "########################################################"
 echo "Setting up tpm (tmux plugin manager)"
 echo "########################################################"
-TMUX_DIR=${HOME}/.config/tmux
+TMUX_DIR=${XDG_CONFIG_HOME}/tmux
 run rm -rf ${TMUX_DIR}
 run mkdir ${TMUX_DIR}
 run git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
@@ -171,10 +173,10 @@ echo "########################################################"
 run rm -rf ${HOME}/.local/nvim*
 
 # nvim 실행시 생성되는 lock파일 등이 repo에 생성되는 것을 막으려면
-# .config/vim 디렉토리를 생성해 두어서 .config/nvim이 디렉토리 통째로
+# .config/nvim 디렉토리를 생성해 두어서 .config/nvim이 디렉토리 통째로
 # 링크가 걸리는 것을 막아야 한다
-run rm -rf ${HOME}/.config/nvim
-run mkdir -p ${HOME}/.config/nvim
+run rm -rf ${XDG_CONFIG_HOME}/nvim
+run mkdir -p ${XDG_CONFIG_HOME}/nvim
 
 function install_latest_nvim() {
   local os=
@@ -245,6 +247,11 @@ echo "########################################################"
 FZF_DIR=${HOME}/.local/fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ${FZF_DIR}
 ${FZF_DIR}/install --xdg --key-bindings --completion --no-update-rc
+
+echo "########################################################"
+echo "Installing fzf-tab"
+echo "########################################################"
+git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-${XDG_CONFIG_HOME}/.oh-my-zsh/custom}/plugins/fzf-tab
 
 echo "########################################################"
 echo "Installing codelldb"

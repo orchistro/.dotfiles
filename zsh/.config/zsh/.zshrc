@@ -44,7 +44,7 @@ go_path=${HOME}/.local/go/bin
 export PATH=${codelldb_path}:${go_path}:${HOME}/.local/bin:/opt/local/bin:/usr/local/bin:${PATH}
 
 # Path to your Oh My Zsh installation.
-export ZSH="$HOME/.config/oh-my-zsh"
+export ZSH="${XDG_CONFIG_HOME}/oh-my-zsh"
 
 # The e is a way to exit when I hit the end of the file and try to page past it. 
 # The F says to just exit if there is only one screens worth of content. 
@@ -174,7 +174,7 @@ if command -v pygmentize >/dev/null 2>&1; then
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source ${HOME}/.config/zsh/.p10k.zsh
+source ${XDG_CONFIG_HOME}/zsh/.p10k.zsh
 
 hostname=$(hostname)
 me=$(whoami)
@@ -245,6 +245,9 @@ python_venv_activator=${HOME}/.venv/bin/activate
 
 setopt noincappendhistory
 setopt nosharehistory
+
+autoload -Uz compinit
+compinit
 
 # ls colors
 export LS_COLORS=':di=00;34:ex=00;32:ln=00;36'  # for linux
