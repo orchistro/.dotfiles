@@ -119,7 +119,7 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(fzf-tab git zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -245,9 +245,6 @@ python_venv_activator=${HOME}/.venv/bin/activate
 
 setopt noincappendhistory
 setopt nosharehistory
-
-autoload -Uz compinit
-compinit
 
 # ls colors
 export LS_COLORS=':di=00;34:ex=00;32:ln=00;36'  # for linux
