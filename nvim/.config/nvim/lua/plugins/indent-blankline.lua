@@ -5,10 +5,10 @@ return {
 	config = function()
 		local ibl = require("ibl")
 		local c = "▏"
+		-- local c = "┊"
 		ibl.setup({
-			scope = { enabled = false },
-			indent = { char = " " },
-			-- indent = { char = "┊" },
+			scope = { enabled = true },
+			indent = { char = c },
 		})
 
 		vim.keymap.set("n", "<leader>if", function()
