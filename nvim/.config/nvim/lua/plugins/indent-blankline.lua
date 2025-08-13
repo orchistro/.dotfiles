@@ -7,7 +7,7 @@ return {
 		local c = "▏"
 		-- local c = "┊"
 		ibl.setup({
-			scope = { enabled = true },
+			scope = { enabled = false },
 			indent = { char = c },
 		})
 
