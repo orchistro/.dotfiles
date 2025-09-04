@@ -68,16 +68,18 @@ return {
 			dap.configurations.c = dap.configurations.cpp
 			dap.configurations.rust = dap.configurations.cpp
 
-			vim.keymap.set("n", "<space>db", dap.toggle_breakpoint, { desc = "[D]AP Toggle [B]reakpoint" })
-			vim.keymap.set("n", "<space>dc", dap.continue, { desc = "[D]AP [C]ontinue" })
-			vim.keymap.set("n", "<space>d?", function()
+			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "[D]AP: Toggle [B]reakpoint" })
+			vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "[D]AP: [C]ontinue" })
+			vim.keymap.set("n", "<leader>du", dap.up, { desc = "[D]AP: [U]p the callstack" })
+			vim.keymap.set("n", "<leader>dd", dap.down, { desc = "[D]AP: [D]own the callstack" })
+			vim.keymap.set("n", "<leader>d?", function()
 				require("dapui").eval(nil, { enter = true })
-			end, { desc = "[D]AP Inspect[?] variable under cursor" })
+			end, { desc = "[D]AP: Inspect[?] variable under cursor" })
 
-			vim.keymap.set("n", "<F6>", dap.step_into)
-			vim.keymap.set("n", "<F7>", dap.step_over)
-			vim.keymap.set("n", "<F8>", dap.step_out)
-			vim.keymap.set("n", "<F9>", "<CMD>DapContinue<CR>")
+			vim.keymap.set("n", "<leader>ds", dap.step_into, { desc = "[D]AP: [S]tep into" })
+			vim.keymap.set("n", "<leader>dn", dap.step_over, { desc = "[D]AP: [N]ext" })
+			vim.keymap.set("n", "<leader>dr", dap.step_out, { desc = "[D]AP: [R]eturn" })
+			-- vim.keymap.set("n", "<leader>", "<CMD>DapContinue<CR>")
 
 			dap.listeners.before.attach.dapui_config = function()
 				dapui.open()
