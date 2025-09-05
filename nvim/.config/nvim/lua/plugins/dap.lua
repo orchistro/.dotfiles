@@ -76,7 +76,7 @@ return {
 				require("dapui").eval(nil, { enter = true })
 			end, { desc = "[D]AP: Inspect[?] variable under cursor" })
 
-			vim.keymap.set("n", "<leader>ds", dap.step_into, { desc = "[D]AP: [S]tep into" })
+			vim.keymap.set("n", "<leader>dt", dap.step_into, { desc = "[D]AP: s[T]ep into" })
 			vim.keymap.set("n", "<leader>dn", dap.step_over, { desc = "[D]AP: [N]ext" })
 			vim.keymap.set("n", "<leader>dr", dap.step_out, { desc = "[D]AP: [R]eturn" })
 			-- vim.keymap.set("n", "<leader>", "<CMD>DapContinue<CR>")
