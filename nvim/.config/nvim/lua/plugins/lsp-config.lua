@@ -117,12 +117,15 @@ return {
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
+						vim.lsp.config(server_name, {})
+						vim.lsp.enable(server_name)
 					end,
 				},
 			})
 
-			require("lspconfig").protols.setup({}) -- protols는 mason에서 지원되지 않아 servers 변수에 못넣..
+			-- protols는 mason에서 지원되지 않아 servers 변수에 못넣..: TODO: 확인 필요
+			vim.lsp.config("protols", {})
+			vim.lsp.enable("protols")
 		end, -- config = function
 	},
 } -- return
