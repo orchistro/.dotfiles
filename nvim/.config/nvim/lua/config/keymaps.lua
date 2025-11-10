@@ -44,9 +44,6 @@ vim.keymap.set(
 	{ desc = "Open vertical split window and jump to the tag definition" }
 )
 
-vim.keymap.set(
-	"n",
-	"<C-w>]",
-	":stag <C-R><C-W><CR>",
-	{ desc = "Open split window and jump to the tag definition" }
-)
+vim.keymap.set("n", "<C-w>]", ":stag <C-R><C-W><CR>", { desc = "Open split window and jump to the tag definition" })
+
+vim.keymap.set("n", "<leader>v", ":vs<CR>", { desc = "[V]ertical split" })

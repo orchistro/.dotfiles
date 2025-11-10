@@ -6,7 +6,7 @@ return {
 	config = function()
 		require("lualine").setup({
 			options = {
-				theme = "ayu_light",
+				theme = "dracula",
 				globalstatus = false,
 				section_separators = "",
 				component_separators = "",
@@ -16,19 +16,48 @@ return {
 					{
 						"filename",
 						path = 1,
+						padding = { left = 0, right = 1 },
 					},
 				},
-				lualine_b = { "branch", "diff" },
+				lualine_b = { { "branch", padding = { left = 0, right = 1 } }, "diff" },
 				lualine_c = {},
-				lualine_x = { "encoding", "fileformat" },
-				lualine_y = {},
-				lualine_z = { "location" },
+				lualine_x = {
+					{
+						"lsp_status",
+						icon = "", -- f013
+						symbols = {
+							-- Standard unicode symbols to cycle through for LSP progress:
+							spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+							-- Standard unicode symbol for when LSP is done:
+							done = "✓",
+							-- Delimiter inserted between LSP names:
+							separator = " ",
+						},
+						-- List of LSP names to ignore (e.g., `null-ls`):
+						ignore_lsp = {},
+						-- Display the LSP name
+						show_name = false,
+					},
+				},
+				lualine_y = {
+					{ "encoding", padding = { left = 0, right = 1 } },
+					{ "fileformat", padding = { left = 0, right = 1 } },
+				},
+				lualine_z = { { "location", padding = { left = 1, right = 0 } } },
 			},
 			inactive_sections = {
 				lualine_c = {
 					{
 						"filename",
 						path = 1,
+						padding = { left = 0, right = 1 },
+					},
+					{
+						"branch",
+						padding = { left = 0, right = 1 },
+					},
+					{
+						"diff",
 					},
 				},
 			},
