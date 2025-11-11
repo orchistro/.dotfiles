@@ -13,13 +13,11 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					{
-						"filename",
-						path = 1,
-						padding = { left = 0, right = 1 },
-					},
+					{ "filename", path = 1 },
 				},
-				lualine_b = { { "branch", padding = { left = 0, right = 1 } }, "diff" },
+				lualine_b = {
+					{ "branch", padding = { left = 1, right = 1 } },
+				},
 				lualine_c = {},
 				lualine_x = {
 					{
@@ -31,7 +29,7 @@ return {
 							-- Standard unicode symbol for when LSP is done:
 							done = "✓",
 							-- Delimiter inserted between LSP names:
-							separator = " ",
+							separator = "",
 						},
 						-- List of LSP names to ignore (e.g., `null-ls`):
 						ignore_lsp = {},
@@ -40,25 +38,15 @@ return {
 					},
 				},
 				lualine_y = {
-					{ "encoding", padding = { left = 0, right = 1 } },
+					{ "encoding", padding = { left = 0, right = 0 } },
 					{ "fileformat", padding = { left = 0, right = 1 } },
 				},
 				lualine_z = { { "location", padding = { left = 1, right = 0 } } },
 			},
 			inactive_sections = {
 				lualine_c = {
-					{
-						"filename",
-						path = 1,
-						padding = { left = 0, right = 1 },
-					},
-					{
-						"branch",
-						padding = { left = 0, right = 1 },
-					},
-					{
-						"diff",
-					},
+					{ "filename", path = 1 },
+					{ "branch", padding = { left = 1, right = 1 } },
 				},
 			},
 		})

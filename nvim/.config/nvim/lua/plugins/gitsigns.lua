@@ -9,34 +9,26 @@ return {
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
 			},
-      on_attach = function(bufnr)
-        local gitsigns = require('gitsigns')
+			on_attach = function()
+				local gitsigns = require("gitsigns")
 
-        local function map(mode, l, r, opts)
-          opts = opts or {}
-          opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
-        end
+				-- Navigation
+				vim.keymap.set("n", "]g", function()
+					if vim.wo.diff then
+						vim.cmd.normal({ "]g", bang = true })
+					else
+						gitsigns.nav_hunk("next")
+					end
+				end, { desc = "Next [g]it change" })
 
-        -- Navigation
-        vim.keymap.set('n', ']g', function()
-          if vim.wo.diff then
-            vim.cmd.normal({']g', bang = true})
-          else
-            gitsigns.nav_hunk('next')
-          end
-        end,
-        { desc = "Next [g]it change" })
-
-        vim.keymap.set('n', '[g', function()
-          if vim.wo.diff then
-            vim.cmd.normal({'[g', bang = true})
-          else
-            gitsigns.nav_hunk('prev')
-          end
-        end,
-        { desc = "Previous [g]it change" })
-      end
-    },
-  },
+				vim.keymap.set("n", "[g", function()
+					if vim.wo.diff then
+						vim.cmd.normal({ "[g", bang = true })
+					else
+						gitsigns.nav_hunk("prev")
+					end
+				end, { desc = "Previous [g]it change" })
+			end,
+		},
+	},
 }
