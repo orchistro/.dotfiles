@@ -35,7 +35,8 @@ return {
 			-- },
 			color_overrides = {
 				latte = {
-					blue = "#5784da", -- neotree directory color
+					blue = "#438fde", -- neotree directory color
+					lavender = "#aa8ffd", -- member, highligted line no
 					base = "#fbf6e4", -- main bg color
 					mantle = "#efe9d4", -- popup bg color, cursor location
 					crust = "#96836e", -- window separator
