@@ -22,7 +22,7 @@ return {
 
 		vim.keymap.set("n", "<leader>tc", function()
 			tscon.toggle()
-		end, { desc = "[T]oggle Treesitter [C]ontext" })
+		end, { desc = "Treesitter [C]ontext" })
 
 		vim.keymap.set("n", "[c", function()
 			tscon.go_to_context(vim.v.count1)

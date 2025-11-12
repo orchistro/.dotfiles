@@ -11,19 +11,19 @@ return {
 			indent = { char = c },
 		})
 
-		vim.keymap.set("n", "<leader>if", function()
+		vim.keymap.set("n", "<leader>tif", function()
 			ibl.setup({
 				scope = { enabled = false },
 				indent = { char = " " },
 			})
-		end, { silent = true, desc = "[I]ndent-blankline O[f]f" })
+		end, { silent = true, desc = "Toggle indent-blankline O[f]f" })
 
-		vim.keymap.set("n", "<leader>in", function()
+		vim.keymap.set("n", "<leader>tin", function()
 			ibl.setup({
 				scope = { enabled = false },
 				indent = { char = c },
 			})
-		end, { silent = true, desc = "[I]ndent-blankline O[n]" })
+		end, { silent = true, desc = "Toggle indent-blankline O[n]" })
 
 		-- 선이 아닌 바탕색으로 표시하는 방식
 		-- local highlight = {

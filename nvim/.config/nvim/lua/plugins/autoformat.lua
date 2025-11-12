@@ -12,7 +12,7 @@ return {
 			desc = "[F]ormat buffer",
 		},
 		{
-			"<leader>tf",
+			"<leader>tfn",
 			function()
 				if vim.g.disable_autoformat then
 					vim.g.disable_autoformat = false
@@ -21,7 +21,19 @@ return {
 				end
 			end,
 			mode = "n",
-			desc = "[T]oggle [F]ormat on save",
+			desc = "Toggle format-on-save O[n]",
+		},
+		{
+			"<leader>tff",
+			function()
+				if vim.g.disable_autoformat then
+					vim.g.disable_autoformat = false
+				else
+					vim.g.disable_autoformat = true
+				end
+			end,
+			mode = "n",
+			desc = "Toggle format-on-save O[f]f",
 		},
 	},
 	opts = {
