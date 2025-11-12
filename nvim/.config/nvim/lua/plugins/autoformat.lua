@@ -11,6 +11,18 @@ return {
 			mode = "",
 			desc = "[F]ormat buffer",
 		},
+		{
+			"<leader>tf",
+			function()
+				if vim.g.disable_autoformat then
+					vim.g.disable_autoformat = false
+				else
+					vim.g.disable_autoformat = true
+				end
+			end,
+			mode = "n",
+			desc = "[T]oggle [F]ormat on save",
+		},
 	},
 	opts = {
 		notify_on_error = false,
