@@ -5,6 +5,14 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
+		local fname_comp = {
+			"filename",
+			path = 1,
+			shorting_target = function()
+				local branch = vim.b.gitsigns_head or "" -- curnent branch name
+				return #branch + 30
+			end,
+		}
 		require("lualine").setup({
 			options = {
 				theme = "dracula",
@@ -16,16 +24,7 @@ return {
 				lualine_a = {
 					{ "branch", padding = { left = 1, right = 1 } },
 				},
-				lualine_b = {
-					{
-						"filename",
-						path = 1,
-						shorting_target = function()
-							local branch = vim.b.gitsigns_head or "" -- curnent branch name
-							return #branch + 30
-						end,
-					},
-				},
+				lualine_b = { fname_comp },
 				lualine_c = {},
 				lualine_x = {
 					{
@@ -54,7 +53,7 @@ return {
 			inactive_sections = {
 				lualine_c = {
 					{ "branch", padding = { left = 1, right = 1 } },
-					{ "filename", path = 1 },
+					fname_comp,
 				},
 			},
 		})
