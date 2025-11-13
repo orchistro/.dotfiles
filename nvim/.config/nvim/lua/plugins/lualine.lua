@@ -1,5 +1,6 @@
 return {
-	"nvim-lualine/lualine.nvim",
+	-- "nvim-lualine/lualine.nvim",
+	"orchistro/lualine.nvim",
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
@@ -16,7 +17,14 @@ return {
 					{ "branch", padding = { left = 1, right = 1 } },
 				},
 				lualine_b = {
-					{ "filename", path = 1 },
+					{
+						"filename",
+						path = 1,
+						shorting_target = function()
+							local branch = vim.b.gitsigns_head or "" -- curnent branch name
+							return #branch + 30
+						end,
+					},
 				},
 				lualine_c = {},
 				lualine_x = {
