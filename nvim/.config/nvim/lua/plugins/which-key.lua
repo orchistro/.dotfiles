@@ -55,6 +55,7 @@ return { -- Useful plugin to show you pending keybinds.
 			{ "<leader>tf", group = "[F]ormat-on-save", icon = "" },
 			{ "<leader>ti", group = "[I]ndent-blankline", icon = "|" },
 			{ "<leader>x", group = "Trouble" },
+			{ "<leader>l", group = "[L]SP", icon = "" },
 			{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
 		},
 	},

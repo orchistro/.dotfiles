@@ -47,3 +47,16 @@ vim.keymap.set(
 vim.keymap.set("n", "<C-w>]", ":stag <C-R><C-W><CR>", { desc = "Open split window and jump to the tag definition" })
 
 vim.keymap.set("n", "<leader>v", ":vs<CR>", { desc = "[V]ertical split" })
+
+vim.keymap.set("n", "<leader>ld", function()
+	vim.diagnostic.open_float(nil, {
+		scope = "line",
+		border = "rounded", -- bold, double, none, shadow, single, solid, rounded
+		focus = false,
+		source = true,
+	})
+end, { desc = "Line [d]iagnostics" })
+
+vim.keymap.set("n", "<leader>lh", function()
+	vim.lsp.buf.hover()
+end, { desc = "[H]over" })
