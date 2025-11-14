@@ -1,22 +1,22 @@
 return {
-	{
-		"HiPhish/rainbow-delimiters.nvim",
-	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		config = function()
-			local config = require("nvim-treesitter.configs")
-			config.setup({
-				auto_install = true,
-				highlight = {
-					enable = true,
-					disable = { "dockerfile" },
-				},
-				indent = { enable = false },
-				-- Enable Rainbow Parentheses
-				rainbow = { enable = true },
-			})
-		end,
-	},
+	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
+	build = ":TSUpdate",
+	branch = "main",
+	config = function()
+		local config = require("nvim-treesitter.configs")
+
+		--- @diagnostic disable-next-line: missing-fields
+		config.setup({
+			ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+			sync_install = false,
+			auto_install = true,
+			ignore_install = {},
+			highlight = {
+				enable = true,
+				disable = { "dockerfile" },
+			},
+			indent = { enable = false },
+		})
+	end,
 }
