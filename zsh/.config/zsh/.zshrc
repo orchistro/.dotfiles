@@ -41,7 +41,7 @@ fi
 # If you come from bash you might have to change your $PATH.
 codelldb_path=${HOME}/.local/codelldb/extension/adapter
 go_path=${HOME}/.local/go/bin
-export PATH=${codelldb_path}:${go_path}:${HOME}/.local/bin:/opt/local/bin:/usr/local/bin:${PATH}
+export PATH=${codelldb_path}:${go_path}:${HOME}/.local/bin:${HOME}/.local/cargo/bin:/opt/local/bin:/usr/local/bin:${PATH}
 
 # Path to your Oh My Zsh installation.
 export ZSH="${XDG_CONFIG_HOME}/oh-my-zsh"

@@ -242,6 +242,11 @@ if [ "${opt_install_cargo}" == "yes" ]; then
 fi
 
 echo "########################################################"
+echo "Installing tree-sitter-cli"
+echo "########################################################"
+cargo install --locked tree-sitter-cli
+
+echo "########################################################"
 echo "Installing fzf"
 echo "########################################################"
 FZF_DIR=${HOME}/.local/fzf
