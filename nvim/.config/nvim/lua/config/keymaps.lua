@@ -47,7 +47,7 @@ vim.keymap.set(
 vim.keymap.set("n", "<C-w>]", ":stag <C-R><C-W><CR>", { desc = "Open split window and jump to the tag definition" })
 
 vim.keymap.set("n", "<leader>vv", ":vs<CR>", { desc = "[V]ertical split" })
-vim.keymap.set("n", "<leader>vs", ":vs<CR>", { desc = "Horizontal [S]plit" })
+vim.keymap.set("n", "<leader>vs", ":sp<CR>", { desc = "Horizontal [S]plit" })
 
 vim.keymap.set("n", "<leader>ld", function()
 	vim.diagnostic.open_float(nil, {
