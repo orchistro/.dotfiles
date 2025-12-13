@@ -249,11 +249,8 @@ echo "installing cargo for protols"
 echo "########################################################"
 # installing protols for parsing protobuf files
 function install_cargo_protols() {
-  if [ "$(uname)" == "Linux" ];then
-    run sudo apt install cargo --yes
-  elif [ "$(uname)" == "Darwin" ]; then
-    run sudo port -N install cargo
-  fi
+  # rustup!
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
   cargo install protols
 }

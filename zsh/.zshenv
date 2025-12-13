@@ -7,3 +7,5 @@ export XDG_STATE_HOME=${HOME}/.local/state
 
 export CARGO_HOME=${HOME}/.local/cargo
 export RUSTUP_HOME=${HOME}/.local/rustup
+
+source ${HOME}/.local/cargo/env
