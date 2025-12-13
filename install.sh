@@ -18,53 +18,74 @@ source ${self_dir}/zsh/.zshenv # XDG_* definitions
 
 function usage() {
   cat <<EOF
-Usage: $(basename $0) [OPT]
-
-DESCRIPTION
-       sets up environment
+Usage:
+  $(basename "$0") [OPTIONS]
 
 Options:
-  --cargo         Install cargo and protols
-  --nvimoldglibc  Install neovim linked with glibc of version less than 2.31.
-                  (For older distros like CentOS7, available only for Linuxes)
+  -c, --cargo
+        Install Cargo (Rust toolchain)
+
+  -n, --nvimoldglibc
+        Install Neovim build compatible with older glibc
+
+  -h, --help
+        Show this help message and exit
+
+Description:
+  This script installs and configures development tools.
+  Long options are supported via an internal compatibility layer
+  and mapped to short options before parsing.
+
+Examples:
+  $(basename "$0") -c
+  $(basename "$0") --cargo
+  $(basename "$0") -c -n
+  $(basename "$0") --cargo --nvimoldglibc
+
+Notes:
+  - Options must appear before positional arguments.
+  - '--' can be used to explicitly terminate option parsing.
 
 EOF
-  exit
+  exit 0
 }
 
-ARGS=$(getopts -o 'h' --long 'cargo,nvimoldglibc,help' -n "$(basename $0)" -- "$@") || usage
-eval set -- "${ARGS}"
+
+args=()
+for arg in "$@"; do
+  case "$arg" in
+    --cargo) args+=("-c") ;;
+    --nvimoldglibc) args+=("-n") ;;
+    --help) args+=("-h") ;;
+    *) args+=("$arg") ;;
+  esac
+done
+
+set -- "${args[@]}"
 
 opt_install_cargo="no"
 opt_nvim="latest"
 
-while true; do
-  case "$1" in
-    --cargo)
-      echo "[OPT] no cargo option set"
+while getopts "cnh" opt; do
+  case "$opt" in
+    c)
+      echo "[OPT] cargo option set"
       opt_install_cargo="yes"
-      shift
       ;;
-    --nvimoldglibc)
+    n)
       echo "[OPT] neovim for older glibc option set"
       opt_nvim="older-glibc"
-      shift
       ;;
-    -h | --help)
+    h)
       usage
       ;;
-    --)
-      shift
-      break
-      ;;
-    -*)
-      error "unknown option: $1"
-      ;;
-    *)
-      error "internal error"
+    ?)
+      usage
       ;;
   esac
 done
+
+shift $((OPTIND - 1))
 
 # checking stow
 echo "########################################################"
