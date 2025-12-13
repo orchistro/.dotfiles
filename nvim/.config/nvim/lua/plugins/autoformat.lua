@@ -63,6 +63,7 @@ return {
 			lua = { "stylua" },
 			cpp = { "clang-format" },
 			bash = { "shfmt" },
+			rust = { "rustfmt" },
 			-- Conform can also run multiple formatters sequentially
 			-- python = { "isort", "black" },
 			--
