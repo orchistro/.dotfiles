@@ -32,7 +32,7 @@ EOF
   exit
 }
 
-ARGS=$(getopt -o 'h' --long 'cargo,nvimoldglibc,help' -n "$(basename $0)" -- "$@") || usage
+ARGS=$(getopts -o 'h' --long 'cargo,nvimoldglibc,help' -n "$(basename $0)" -- "$@") || usage
 eval set -- "${ARGS}"
 
 opt_install_cargo="no"
