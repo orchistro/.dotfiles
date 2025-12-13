@@ -3,4 +3,6 @@
 abs=$(cd "$(dirname -- "$0")" >/dev/null; pwd -P)
 source ${abs}/common.inc.sh
 
-run ssh dotdev
+host=${1:-dev2510}
+
+run ssh ${host}
