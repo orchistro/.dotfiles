@@ -248,7 +248,7 @@ echo "installing rustup"
 echo "########################################################"
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
 run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-run sourc /home/shawn/.local/cargo/env
+run source /home/shawn/.local/cargo/env
 
 if [ "${opt_install_protols}" == "yes" ]; then
   echo "########################################################"
