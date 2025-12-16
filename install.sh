@@ -2,10 +2,7 @@
 
 unset ZSH
 
-function run() {
-  echo "> [$(pwd)] $@"
-  eval $@
-}
+set +x
 
 function error() {
   >&2 echo $@
@@ -107,8 +104,8 @@ function prepdir() {
   local dirs=( $@ )
 
   for d in ${dirs[@]}; do
-    run rm -rf ${HOME}/${parent}/${d}
-    run mkdir -p ${HOME}/${parent}/${d}
+    rm -rf ${HOME}/${parent}/${d}
+    mkdir -p ${HOME}/${parent}/${d}
   done
 }
 
@@ -132,7 +129,7 @@ echo "########################################################"
 echo "Setting up oh my zsh"
 echo "########################################################"
 OMZ_DIR=${XDG_CONFIG_HOME}/oh-my-zsh
-run rm -rf ${OMZ_DIR}
+rm -rf ${OMZ_DIR}
 ZSH=${OMZ_DIR} sh -c \
   "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   "" \
@@ -141,10 +138,10 @@ ZSH=${OMZ_DIR} sh -c \
 echo "########################################################"
 echo "Setting up zsh plugins"
 echo "########################################################"
-run git clone --depth=1 https://github.com/romkatv/powerlevel10k.git    ${OMZ_DIR}/custom/themes/powerlevel10k
-run git clone https://github.com/zsh-users/zsh-syntax-highlighting.git  ${OMZ_DIR}/plugins/zsh-syntax-highlighting
-run git clone https://github.com/zsh-users/zsh-autosuggestions          ${OMZ_DIR}/plugins/zsh-autosuggestions
-run cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git    ${OMZ_DIR}/custom/themes/powerlevel10k
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git  ${OMZ_DIR}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions          ${OMZ_DIR}/plugins/zsh-autosuggestions
+cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
 
 # tpm
 # tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요
@@ -153,9 +150,9 @@ echo "########################################################"
 echo "Setting up tpm (tmux plugin manager)"
 echo "########################################################"
 TMUX_DIR=${XDG_CONFIG_HOME}/tmux
-run rm -rf ${TMUX_DIR}
-run mkdir ${TMUX_DIR}
-run git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
+rm -rf ${TMUX_DIR}
+mkdir ${TMUX_DIR}
+git clone https://github.com/tmux-plugins/tpm ${TMUX_DIR}/plugins/tpm
 
 # .local/bin 은 디렉토리여야만 한다.
 # 각 시스템 고유의 bin이 필요하면 설치할 것이고,
@@ -178,25 +175,25 @@ fi
 echo "########################################################"
 echo "Cleaning up installations that might have been installed"
 echo "########################################################"
-run rm -f ~/.zshrc*  # OMZ 설치시 만들어준 .zshrc제거 (추후 stow로 zshrc 설치할 것임)
+rm -f ~/.zshrc*  # OMZ 설치시 만들어준 .zshrc제거 (추후 stow로 zshrc 설치할 것임)
 
-run rm -rf ~/.oh-my-zsh
-run rm -rf ~/.tmux
-run rm -rf ~/.tmux.conf
+rm -rf ~/.oh-my-zsh
+rm -rf ~/.tmux
+rm -rf ~/.tmux.conf
 
-run rm -rf ~/.local/bin/nvim
+rm -rf ~/.local/bin/nvim
 
 echo "########################################################"
 echo "Installing nvim"
 echo "########################################################"
 
-run rm -rf ${HOME}/.local/nvim*
+rm -rf ${HOME}/.local/nvim*
 
 # nvim 실행시 생성되는 lock파일 등이 repo에 생성되는 것을 막으려면
 # .config/nvim 디렉토리를 생성해 두어서 .config/nvim이 디렉토리 통째로
 # 링크가 걸리는 것을 막아야 한다
-run rm -rf ${XDG_CONFIG_HOME}/nvim
-run mkdir -p ${XDG_CONFIG_HOME}/nvim
+rm -rf ${XDG_CONFIG_HOME}/nvim
+mkdir -p ${XDG_CONFIG_HOME}/nvim
 
 function install_latest_nvim() {
   local os=
@@ -206,10 +203,10 @@ function install_latest_nvim() {
     os="macos-arm64"
   fi
   echo "Installing latest nvim for ${os}"
-  run curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-${os}.tar.gz
-  run tar -C ~/.local -xzf nvim-${os}.tar.gz
-  run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
-  run rm -f nvim-${os}.tar.gz
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-${os}.tar.gz
+  tar -C ~/.local -xzf nvim-${os}.tar.gz
+  ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
+  rm -f nvim-${os}.tar.gz
 }
 
 function install_nvim_older_glibc() {
@@ -221,10 +218,10 @@ function install_nvim_older_glibc() {
     return
   fi
   echo "Installing nvim linked with older glibc(version < 2.31) for ${os}"
-  run curl -LO https://github.com/neovim/neovim-releases/releases/latest/download/nvim-linux-x86_64.tar.gz
-  run tar -C ~/.local -xzf nvim-${os}.tar.gz
-  run ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
-  run rm -f nvim-${os}.tar.gz
+  curl -LO https://github.com/neovim/neovim-releases/releases/latest/download/nvim-linux-x86_64.tar.gz
+  tar -C ~/.local -xzf nvim-${os}.tar.gz
+  ln -s ~/.local/nvim-${os}/bin/nvim ~/.local/bin/nvim
+  rm -f nvim-${os}.tar.gz
 }
 
 if [ "${opt_nvim}" == "latest" ]; then
@@ -238,17 +235,17 @@ echo "########################################################"
 echo "Stow!!!"
 echo "########################################################"
 # run stow -D nvim zsh tmux local # 먼저 지운 후에
-run ${STOW} nvim
-run ${STOW} zsh
-run ${STOW} tmux
-run ${STOW} local
+${STOW} nvim
+${STOW} zsh
+${STOW} tmux
+${STOW} local
 
 echo "########################################################"
 echo "installing rustup"
 echo "########################################################"
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-run source /home/shawn/.local/cargo/env
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+source /home/shawn/.local/cargo/env
 
 if [ "${opt_install_protols}" == "yes" ]; then
   echo "########################################################"
@@ -277,12 +274,12 @@ git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-${OMZ_DIR}/custom}/plu
 echo "########################################################"
 echo "Installing codelldb"
 echo "########################################################"
-run rm -rf ~/.local/codelldb
-run mkdir -p ~/.local/codelldb
-run curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/codelldb-linux-x64.vsix
-run mv codelldb-linux-x64.vsix ~/.local/codelldb
-run cd ~/.local/codelldb
-run unzip -q codelldb-linux-x64.vsix
+rm -rf ~/.local/codelldb
+mkdir -p ~/.local/codelldb
+curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/codelldb-linux-x64.vsix
+mv codelldb-linux-x64.vsix ~/.local/codelldb
+cd ~/.local/codelldb
+unzip -q codelldb-linux-x64.vsix
 
 echo "########################################################"
 echo "Configuring bashrc and vimrc"
