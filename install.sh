@@ -2,9 +2,11 @@
 
 unset ZSH
 
-function run() {
-  echo "> [$(pwd)] $@"
-  eval $@
+run() {
+  printf '> [%s] ' "$PWD"
+  printf '%q ' "$@"
+  printf '\n'
+  "$@"
 }
 
 function error() {
@@ -246,9 +248,11 @@ run ${STOW} local
 echo "########################################################"
 echo "installing rustup"
 echo "########################################################"
+run rm -rf ${HOME}/.local/cargo
+run rm -rf ${HOME}/.local/rustup
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
-run source /home/shawn/.local/cargo/env
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+run source ${HOME}/.local/cargo/env
 
 if [ "${opt_install_protols}" == "yes" ]; then
   echo "########################################################"
