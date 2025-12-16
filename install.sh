@@ -22,8 +22,8 @@ Usage:
   $(basename "$0") [OPTIONS]
 
 Options:
-  -c, --cargo
-        Install Cargo (Rust toolchain)
+  -p, --protols
+        Install protols
 
   -n, --nvimoldglibc
         Install Neovim build compatible with older glibc
@@ -37,10 +37,10 @@ Description:
   and mapped to short options before parsing.
 
 Examples:
-  $(basename "$0") -c
-  $(basename "$0") --cargo
-  $(basename "$0") -c -n
-  $(basename "$0") --cargo --nvimoldglibc
+  $(basename "$0") -p
+  $(basename "$0") --protols
+  $(basename "$0") -p -n
+  $(basename "$0") --protols --nvimoldglibc
 
 Notes:
   - Options must appear before positional arguments.
@@ -54,7 +54,7 @@ EOF
 args=()
 for arg in "$@"; do
   case "$arg" in
-    --cargo) args+=("-c") ;;
+    --protols) args+=("-p") ;;
     --nvimoldglibc) args+=("-n") ;;
     --help) args+=("-h") ;;
     *) args+=("$arg") ;;
@@ -63,14 +63,14 @@ done
 
 set -- "${args[@]}"
 
-opt_install_cargo="no"
+opt_install_protols="no"
 opt_nvim="latest"
 
 while getopts "cnh" opt; do
   case "$opt" in
-    c)
-      echo "[OPT] cargo option set"
-      opt_install_cargo="yes"
+    p)
+      echo "[OPT] protols option set"
+      opt_install_protols="yes"
       ;;
     n)
       echo "[OPT] neovim for older glibc option set"
@@ -244,18 +244,15 @@ run ${STOW} tmux
 run ${STOW} local
 
 echo "########################################################"
-echo "installing cargo for protols"
+echo "installing rustup"
 echo "########################################################"
-# installing protols for parsing protobuf files
-function install_cargo_protols() {
-  # rustup!
-  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 
+if [ "${opt_install_protols}" == "yes" ]; then
+  echo "########################################################"
+  echo "installing protols"
+  echo "########################################################"
   cargo install protols
-}
-
-if [ "${opt_install_cargo}" == "yes" ]; then
-  run cargo --version && cargo install protols || install_cargo_protols
 fi
 
 echo "########################################################"
