@@ -251,7 +251,8 @@ echo "########################################################"
 run rm -rf ${HOME}/.local/cargo
 run rm -rf ${HOME}/.local/rustup
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+# you need --no-modify-path option to keep rustup from adding source cargo/env at the end of .zshenv
+run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 run source ${HOME}/.local/cargo/env
 
 if [ "${opt_install_protols}" == "yes" ]; then
