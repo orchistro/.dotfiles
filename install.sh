@@ -120,13 +120,12 @@ prepdir .config zsh nvim tmux
 echo "########################################################"
 echo "Preparing .local directory"
 echo "########################################################"
-prepdir .local share state fzf
+prepdir .local state fzf # share : .local/share .local/bin may contain zsh installation
 
 echo "########################################################"
 echo "Preparing .local/state directory"
 echo "########################################################"
-prepdir .local/state zsh
-prepdir .local/state less
+prepdir .local/state zsh less
 
 # oh my zsh
 echo "########################################################"
