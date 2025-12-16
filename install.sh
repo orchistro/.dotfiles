@@ -246,7 +246,8 @@ run ${STOW} local
 echo "########################################################"
 echo "installing rustup"
 echo "########################################################"
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+export RUSTUP_INIT_SKIP_PATH_CHECK=y
+run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
 
 if [ "${opt_install_protols}" == "yes" ]; then
   echo "########################################################"
