@@ -66,7 +66,7 @@ set -- "${args[@]}"
 opt_install_protols="no"
 opt_nvim="latest"
 
-while getopts "cnh" opt; do
+while getopts "pnh" opt; do
   case "$opt" in
     p)
       echo "[OPT] protols option set"
