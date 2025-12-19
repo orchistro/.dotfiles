@@ -14,11 +14,9 @@ return {
 		{
 			"<leader>tfn",
 			function()
-				if vim.g.disable_autoformat then
-					vim.g.disable_autoformat = false
-				else
-					vim.g.disable_autoformat = true
-				end
+				vim.g.disable_autoformat = false
+				vim.b.disable_autoformat = false
+				vim.notify("format-on-save: ON", vim.log.levels.INFO)
 			end,
 			mode = "n",
 			desc = "Toggle format-on-save O[n]",
@@ -26,11 +24,9 @@ return {
 		{
 			"<leader>tff",
 			function()
-				if vim.g.disable_autoformat then
-					vim.g.disable_autoformat = false
-				else
-					vim.g.disable_autoformat = true
-				end
+				vim.g.disable_autoformat = true
+				vim.b.disable_autoformat = true
+				vim.notify("format-on-save: OFF", vim.log.levels.INFO)
 			end,
 			mode = "n",
 			desc = "Toggle format-on-save O[f]f",
