@@ -91,6 +91,14 @@ return {
 						},
 					},
 				}, -- lua_ls
+				rust_analyzer = {
+					settings = {
+						rust_analyzer = {
+							checkOnSave = { enable = true },
+							procMacro = { enable = true },
+						},
+					},
+				},
 			} -- local servers
 
 			-- Ensure the servers and tools above are installed
