@@ -17,7 +17,7 @@ function alert_ssh_alive_interval()
 function run_macos_specifics()
 {
   # ssh alive interval 조정
-  grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || alert_ssh_alive_interval
+  alert_ssh_alive_interval
 
   # lock screen으로 들어갔을 때 버벅거리는 문제 해결
   dscl . readpl /Users/user accountPolicyData history > /dev/null 2>&1
@@ -25,9 +25,7 @@ function run_macos_specifics()
     sudo dscl . deletepl ${HOME} accountPolicyData history
   fi
 
-  if [ "$(/usr/bin/uname)" = "Darwin" ]; then
-    echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u USER
-  fi
+  echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u USER
 }
 
 (uname -a | grep Darwin 1> /dev/null) && run_macos_specifics
