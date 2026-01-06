@@ -41,8 +41,14 @@ return {
 					end,
 				},
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					completion = cmp.config.window.bordered({
+						border = "rounded",
+						winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+					}),
+					documentation = cmp.config.window.bordered({
+						border = "rounded",
+						winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+					}),
 				},
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
