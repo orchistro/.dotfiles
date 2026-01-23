@@ -76,7 +76,28 @@ return {
 					filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 					capabilities = capabilities,
 				}, -- clangd
-				-- pyright = {},
+				pyright = {
+					settings = {
+						pyright = {
+							-- Disables the "Organize Imports" code action (if using Ruff)
+							disableOrganizeImports = true,
+						},
+						python = {
+							analysis = {
+								-- Type checking level: off, basic, standard, strict
+								typeCheckingMode = "standard",
+								-- Auto-detect import paths
+								autoSearchPaths = true,
+								-- Use library code for type inference
+								useLibraryCodeForTypes = true,
+								-- Diagnostic mode: openFilesOnly, workspace
+								diagnosticMode = "openFilesOnly",
+								-- Ignore specific diagnostics (optional)
+								-- diagnosticSeverityOverrides = {},
+							},
+						},
+					},
+				},
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes = { ...},
