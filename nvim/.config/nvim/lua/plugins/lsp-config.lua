@@ -120,6 +120,7 @@ return {
 						},
 					},
 				},
+				gopls = {}, -- for golang
 			} -- local servers
 
 			-- Ensure the servers and tools above are installed
