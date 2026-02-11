@@ -17,6 +17,7 @@ sudo port install stow
 ```
 sudo npm install pyright
 ```
+* install `go` for `gopls` (go LSP server)
 * run `install.sh`
 * note that you don't need to install neovim. The `install.sh` script downloads the latest neovim and put it in `.local/bin/`.
 
