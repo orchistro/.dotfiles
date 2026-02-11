@@ -12,6 +12,7 @@ if [ -e "${HOME}/.local/cargo/env" ]; then
   source "${HOME}/.local/cargo/env"
 fi
 
+# following lines are for uv
 if [ -e "$HOME/.local/share/../bin/env" ]; then
   source "$HOME/.local/share/../bin/env"
 fi
