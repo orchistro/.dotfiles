@@ -8,6 +8,10 @@ export XDG_STATE_HOME=${HOME}/.local/state
 export CARGO_HOME=${HOME}/.local/cargo
 export RUSTUP_HOME=${HOME}/.local/rustup
 
-if [ -e ${HOME}/.local/cargo/env ]; then
-  source ${HOME}/.local/cargo/env
+if [ -e "${HOME}/.local/cargo/env" ]; then
+  source "${HOME}/.local/cargo/env"
+fi
+
+if [ -e "$HOME/.local/share/../bin/env" ]; then
+  source "$HOME/.local/share/../bin/env"
 fi
