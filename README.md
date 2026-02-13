@@ -4,15 +4,20 @@ Make sure you clone this repo to `${HOME}/.dotfiles` directory.
 
 ## Macos
 * install [macports](https://www.macports.org/)
-* install `cargo` : to install [protols](https://github.com/coder3101/protols)(lsp for google's [protocol buffers](https://protobuf.dev/))
+* install `cargo` using `rustup` : to install [protols](https://github.com/coder3101/protols)(lsp for google's [protocol buffers](https://protobuf.dev/))
 ```bash
-sudo port install cargo
 cargo install protols
 ```
 * install [GNU Stow](https://www.gnu.org/software/stow/) to install `.` files.
 ```bash
 sudo port install stow
 ```
+* install node/npm for installing pyright
+* install `pyright`
+```
+sudo npm install pyright
+```
+* install `go` for `gopls` (go LSP server)
 * run `install.sh`
 * note that you don't need to install neovim. The `install.sh` script downloads the latest neovim and put it in `.local/bin/`.
 
