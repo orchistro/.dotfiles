@@ -1,5 +1,0 @@
-#!/bin/bash
-
-program=${HOME}/.cargo/bin/protols
-[[ -e $program ]] && $program $@
-
