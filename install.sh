@@ -265,7 +265,7 @@ fi
 echo "########################################################"
 echo "Installing tree-sitter-cli"
 echo "########################################################"
-cargo install --locked tree-sitter-cli
+run cargo install --locked tree-sitter-cli
 
 echo "########################################################"
 echo "Installing fzf"
