@@ -3,10 +3,29 @@
 unset ZSH
 
 run() {
-  printf '> [%s] ' "$PWD"
+  if [ -t 1 ]; then
+    CYAN="\033[1;36m"
+    RED="\033[1;31m"
+    GREEN="\033[1;32m"
+    RESET="\033[0m"
+  else
+    CYAN=""; RED=""; GREEN=""; RESET=""
+  fi
+
+  printf "${CYAN}+ "
   printf '%q ' "$@"
-  printf '\n'
-  eval "$@"
+  printf "${RESET}\n"
+
+  "$@"
+  status=$?
+
+  if [ $status -eq 0 ]; then
+    printf "${GREEN}✔ success${RESET}\n"
+  else
+    printf "${RED}✘ failed (exit %d)${RESET}\n" "$status"
+  fi
+
+  return $status
 }
 
 function error() {
@@ -240,9 +259,13 @@ echo "installing rustup"
 echo "########################################################"
 run rm -rf ${HOME}/.local/cargo
 run rm -rf ${HOME}/.local/rustup
+rustup_install=rustup_install.sh
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
-# you need --no-modify-path option to keep rustup from adding source cargo/env at the end of .zshenv
-run "curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path"
+# --no-modify-path: keep rustup from adding source cargo/env at the end of .zshenv
+run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf --output ${rustup_install}
+run chmod +x ${rustup_install}
+run ./${rustup_install} -s -- -y --no-modify-path
+run rm -f ${rustup_install}
 run source ${HOME}/.local/cargo/env
 
 echo "########################################################"
@@ -259,7 +282,11 @@ echo "########################################################"
 echo "installing nvm + node.js"
 echo "########################################################"
 run rm -rf ${XDG_CONFIG_HOME}/nvm
-run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash"
+nvm_install=nvm_install.sh
+run curl -L https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh --output ${nvm_install}
+run chmod +x ${nvm_install}
+run ./${nvm_install}
+run rm -f ${nvm_install}
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
