@@ -246,6 +246,16 @@ run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no
 run source ${HOME}/.local/cargo/env
 
 echo "########################################################"
+echo "installing protols"
+echo "########################################################"
+run cargo install protols
+
+echo "########################################################"
+echo "Installing tree-sitter-cli"
+echo "########################################################"
+run cargo install --locked tree-sitter-cli
+
+echo "########################################################"
 echo "installing nvm + node.js"
 echo "########################################################"
 run rm -rf ${XDG_CONFIG_HOME}/nvm
@@ -262,14 +272,24 @@ echo "########################################################"
 run npm install -g pyright
 
 echo "########################################################"
-echo "installing protols"
+echo "installing golang"
 echo "########################################################"
-run cargo install protols
+function install_golang() {
+  local os=
+  if [ "$(uname)" == "Linux" ]; then
+    os="linux-amd64"
+  elif [ "$(uname)" == "Darwin" ]; then
+    os="darwin-arm64"
+  fi
+  local pkg=go1.26.0.${os}.tar.gz
+  rm -rf ${HOME}/.local/go
+  echo "Installing golang for $(uname)"
+  run curl -LO https://go.dev/dl/${pkg}
+  run tar -C ~/.local -xzf ${pkg}
+  run rm -f ${pkg}
+}
 
-echo "########################################################"
-echo "Installing tree-sitter-cli"
-echo "########################################################"
-run cargo install --locked tree-sitter-cli
+install_golang
 
 echo "########################################################"
 echo "Installing fzf"
