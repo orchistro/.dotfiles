@@ -24,9 +24,6 @@ Usage:
   $(basename "$0") [OPTIONS]
 
 Options:
-  -p, --protols
-        Install protols
-
   -n, --nvimoldglibc
         Install Neovim build compatible with older glibc
 
@@ -39,10 +36,8 @@ Description:
   and mapped to short options before parsing.
 
 Examples:
-  $(basename "$0") -p
-  $(basename "$0") --protols
-  $(basename "$0") -p -n
-  $(basename "$0") --protols --nvimoldglibc
+  $(basename "$0") -n
+  $(basename "$0") --nvimoldglibc
 
 Notes:
   - Options must appear before positional arguments.
@@ -56,7 +51,6 @@ EOF
 args=()
 for arg in "$@"; do
   case "$arg" in
-    --protols) args+=("-p") ;;
     --nvimoldglibc) args+=("-n") ;;
     --help) args+=("-h") ;;
     *) args+=("$arg") ;;
@@ -68,12 +62,8 @@ set -- "${args[@]}"
 opt_install_protols="no"
 opt_nvim="latest"
 
-while getopts "pnh" opt; do
+while getopts "nh" opt; do
   case "$opt" in
-    p)
-      echo "[OPT] protols option set"
-      opt_install_protols="yes"
-      ;;
     n)
       echo "[OPT] neovim for older glibc option set"
       opt_nvim="older-glibc"
@@ -271,12 +261,10 @@ echo "installing pyright"
 echo "########################################################"
 run npm install -g pyright
 
-if [ "${opt_install_protols}" == "yes" ]; then
-  echo "########################################################"
-  echo "installing protols"
-  echo "########################################################"
-  run cargo install protols
-fi
+echo "########################################################"
+echo "installing protols"
+echo "########################################################"
+run cargo install protols
 
 echo "########################################################"
 echo "Installing tree-sitter-cli"
