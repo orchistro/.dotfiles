@@ -6,7 +6,7 @@ run() {
   printf '> [%s] ' "$PWD"
   printf '%q ' "$@"
   printf '\n'
-  "$@"
+  eval "$@"
 }
 
 function error() {
@@ -242,7 +242,7 @@ run rm -rf ${HOME}/.local/cargo
 run rm -rf ${HOME}/.local/rustup
 export RUSTUP_INIT_SKIP_PATH_CHECK=y
 # you need --no-modify-path option to keep rustup from adding source cargo/env at the end of .zshenv
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
+run "curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path"
 run source ${HOME}/.local/cargo/env
 
 echo "########################################################"
@@ -259,7 +259,7 @@ echo "########################################################"
 echo "installing nvm + node.js"
 echo "########################################################"
 run rm -rf ${XDG_CONFIG_HOME}/nvm
-run curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
