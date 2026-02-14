@@ -4,9 +4,9 @@ unset ZSH
 
 run() {
   if [ -t 1 ]; then
-    CYAN="\033[1;36m"
-    RED="\033[1;31m"
-    GREEN="\033[1;32m"
+    CYAN="\033[0;36m"
+    RED="\033[0;31m"
+    GREEN="\033[0;32m"
     RESET="\033[0m"
   else
     CYAN=""; RED=""; GREEN=""; RESET=""
@@ -264,7 +264,7 @@ export RUSTUP_INIT_SKIP_PATH_CHECK=y
 # --no-modify-path: keep rustup from adding source cargo/env at the end of .zshenv
 run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf --output ${rustup_install}
 run chmod +x ${rustup_install}
-run ./${rustup_install} -s -- -y --no-modify-path
+run ./${rustup_install} -y --no-modify-path
 run rm -f ${rustup_install}
 run source ${HOME}/.local/cargo/env
 
