@@ -255,6 +255,22 @@ export RUSTUP_INIT_SKIP_PATH_CHECK=y
 run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 run source ${HOME}/.local/cargo/env
 
+echo "########################################################"
+echo "installing nvm + node.js"
+echo "########################################################"
+run rm -rf ${XDG_CONFIG_HOME}/nvm
+run curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+
+run nvm install 24  # this installs node 24
+
+echo "########################################################"
+echo "installing pyright"
+echo "########################################################"
+run npm install -g pyright
+
 if [ "${opt_install_protols}" == "yes" ]; then
   echo "########################################################"
   echo "installing protols"
