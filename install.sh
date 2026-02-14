@@ -269,9 +269,9 @@ run rm -f ${rustup_install}
 run source ${HOME}/.local/cargo/env
 
 echo "########################################################"
-echo "installing protols"
+echo "installing protols ripgrep fdfind"
 echo "########################################################"
-run cargo install protols
+run cargo install protols ripgrep fd-find
 
 echo "########################################################"
 echo "Installing tree-sitter-cli"
