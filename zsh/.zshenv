@@ -16,3 +16,6 @@ fi
 if [ -e "$HOME/.local/share/../bin/env" ]; then
   source "$HOME/.local/share/../bin/env"
 fi
+
+# opencode
+export PATH=/home/shawn/.opencode/bin:$PATH
