@@ -126,7 +126,10 @@ function prepdir() {
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-prepdir .config zsh nvim tmux alacritty opencode opencode/themes
+prepdir .config zsh nvim tmux alacritty
+# opencode: opencode.json 등 기존 설정을 보존하기 위해 디렉토리 통째로 날리지 않고
+# stow가 디렉토리 심링크를 만들지 않도록 필요한 디렉토리만 미리 생성
+run mkdir -p ${HOME}/.config/opencode/themes
 
 echo "########################################################"
 echo "Preparing .local directory"
