@@ -128,12 +128,10 @@ echo "Preparing .config directory"
 echo "########################################################"
 prepdir .config zsh nvim tmux alacritty
 # opencode: opencode.json 등 기존 설정을 보존하기 위해 디렉토리 통째로 날리지 않고
-# stow가 디렉토리 심링크를 만들지 않도록 필요한 디렉토리만 미리 생성
-# stow가 관리하는 파일은 기존 파일이 있으면 충돌하므로 제거
-run mkdir -p ${HOME}/.config/opencode/themes
+# stow가 관리하는 파일만 정리. themes/는 디렉토리 통째로 심링크
+run mkdir -p ${HOME}/.config/opencode
+run rm -rf ${HOME}/.config/opencode/themes
 run rm -f ${HOME}/.config/opencode/tui.json
-run rm -f ${HOME}/.config/opencode/themes/everforest-light.json
-run rm -f ${HOME}/.config/opencode/themes/solarized-light.json
 
 echo "########################################################"
 echo "Preparing .local directory"
