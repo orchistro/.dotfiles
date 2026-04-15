@@ -126,7 +126,7 @@ function prepdir() {
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-prepdir .config zsh nvim tmux
+prepdir .config zsh nvim tmux alacritty
 
 echo "########################################################"
 echo "Preparing .local directory"

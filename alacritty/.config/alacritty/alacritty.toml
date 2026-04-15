@@ -1,0 +1,38 @@
+[general]
+import = [
+  # uncomment the flavour you want below:
+  "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  # "~/.config/alacritty/catppuccin-macchiato.toml"
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+dimensions.columns = 237
+dimensions.lines = 65
+option_as_alt = "Both"
+padding = { x = 5, y = 5 }
+resize_increments = true
+
+[font]
+normal.family = "JetBrainsMono Nerd Font Propo"
+normal.style = "Light"
+size = 13
+offset.x = -1
+offset.y = -3
+
+[cursor]
+style.blinking = "Never"
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Command", action = "CreateNewWindow" },
+  { key = "N", mods = "Command|Shift", action = "SpawnNewInstance" },
+]
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t/.-"
