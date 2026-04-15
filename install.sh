@@ -126,7 +126,7 @@ function prepdir() {
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-prepdir .config zsh nvim tmux alacritty
+prepdir .config zsh nvim tmux alacritty opencode opencode/themes
 
 echo "########################################################"
 echo "Preparing .local directory"
@@ -253,6 +253,7 @@ run ${STOW} nvim
 run ${STOW} zsh
 run ${STOW} tmux
 run ${STOW} alacritty
+run ${STOW} opencode
 run ${STOW} local
 
 echo "########################################################"
