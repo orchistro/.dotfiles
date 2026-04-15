@@ -252,6 +252,7 @@ echo "########################################################"
 run ${STOW} nvim
 run ${STOW} zsh
 run ${STOW} tmux
+run ${STOW} alacritty
 run ${STOW} local
 
 echo "########################################################"
