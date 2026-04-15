@@ -1,4 +1,5 @@
 {
   "$schema": "https://opencode.ai/tui.json",
-  "theme": "everforest-light"
+  "theme": "everforest-light",
+  "mouse": false,
 }
