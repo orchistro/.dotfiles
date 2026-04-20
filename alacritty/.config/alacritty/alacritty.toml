@@ -24,8 +24,9 @@ normal = { family = "JetBrainsMono Nerd Font Propo", style = "Light" }
 # bold_italic = { family = "JetBrainsMono Nerd Font Propo", style = "Bold Italic" }
 
 size = 13
-offset.x = 0
-offset.y = 1
+offset.x = -1
+offset.y = 0
+
 builtin_box_drawing = true
 
 [cursor]
