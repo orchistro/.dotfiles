@@ -11,7 +11,7 @@ import = [
 TERM = "xterm-256color"
 
 [window]
-dimensions.columns = 207
+dimensions.columns = 194
 dimensions.lines = 51
 option_as_alt = "Both"
 padding = { x = 1, y = 2 }
@@ -24,7 +24,7 @@ normal = { family = "JetBrainsMono Nerd Font Propo", style = "Light" }
 # bold_italic = { family = "JetBrainsMono Nerd Font Propo", style = "Bold Italic" }
 
 size = 13
-offset.x = -1
+offset.x = 0
 offset.y = 1
 builtin_box_drawing = true
 
