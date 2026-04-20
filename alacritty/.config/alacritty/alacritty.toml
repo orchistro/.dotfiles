@@ -19,9 +19,9 @@ resize_increments = true
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Propo", style = "Light" }
-# bold = { family = "JetBrainsMono Nerd Font Propo", style = "Bold" }
-# italic = { family = "JetBrainsMono Nerd Font Propo", style = "Italic" }
-# bold_italic = { family = "JetBrainsMono Nerd Font Propo", style = "Bold Italic" }
+bold = { family = "JetBrainsMono Nerd Font Propo", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font Propo", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font Propo", style = "Bold Italic" }
 
 size = 13
 offset.x = -1
