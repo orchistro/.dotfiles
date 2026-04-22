@@ -16,6 +16,8 @@ dimensions.lines = 35
 option_as_alt = "Both"
 padding = { x = 1, y = 2 }
 resize_increments = true
+decorations = "Full"
+opacity = 1
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Propo", style = "ExtraLight" }
@@ -40,6 +42,9 @@ bindings = [
 
 [mouse]
 # hide_when_typing = true
+bindings = [
+  {mouse = "Left", mods = "Control|Shift", chars = "\u0014" },  # 컨트롤 쉬프트 좌클릭을 ^t 로 매핑: tag jump back
+]
 
 [selection]
 save_to_clipboard = true
