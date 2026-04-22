@@ -18,7 +18,7 @@ padding = { x = 1, y = 2 }
 resize_increments = true
 
 [font]
-normal = { family = "JetBrainsMono Nerd Font Propo", style = "Light" }
+normal = { family = "JetBrainsMono Nerd Font Propo", style = "ExtraLight" }
 bold = { family = "JetBrainsMono Nerd Font Propo", style = "Bold" }
 italic = { family = "JetBrainsMono Nerd Font Propo", style = "Italic" }
 bold_italic = { family = "JetBrainsMono Nerd Font Propo", style = "Bold Italic" }
