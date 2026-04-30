@@ -1,0 +1,65 @@
+# Ghostty config — converted from alacritty.toml + catppuccin-latte.toml
+
+# ── Environment ──────────────────────────────────────────────────────────────
+term = xterm-256color
+
+# ── Window ───────────────────────────────────────────────────────────────────
+window-width = 130
+window-height = 35
+macos-option-as-alt = true
+
+# ── Font ─────────────────────────────────────────────────────────────────────
+font-family = JetBrainsMono Nerd Font Propo
+# Thin Light
+font-style = Light
+font-size = 12.5
+adjust-cell-width = -1
+
+# ── Cursor ───────────────────────────────────────────────────────────────────
+cursor-style-blink = false
+cursor-style = block
+shell-integration-features = no-cursor
+
+cursor-color = #dc8a78
+cursor-text = #eff1f5
+
+# ── Mouse ────────────────────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+
+# ── Selection ────────────────────────────────────────────────────────────────
+copy-on-select = clipboard
+
+# ── Keybindings ──────────────────────────────────────────────────────────────
+
+# ── Colors: Catppuccin Latte ──────────────────────────────────────────────────
+background = #FBF6E4
+foreground = #697A82
+
+# cursor
+
+# selection
+selection-background = #EED887
+selection-foreground = #697A82
+
+# 16-color palette
+# normal (0–7)
+palette = 0=#bcc0cc
+palette = 1=#d20f39
+palette = 2=#6dab61
+palette = 3=#df8e1d
+palette = 4=#438fde
+palette = 5=#ea76cb
+palette = 6=#179299
+palette = 7=#5c5f77
+# bright (8–15)
+palette = 8=#acb0be
+palette = 9=#d20f39
+palette = 10=#6dab61
+palette = 11=#df8e1d
+palette = 12=#438fde
+palette = 13=#ea76cb
+palette = 14=#179299
+palette = 15=#6c6f85
+# indexed (16, 17)
+palette = 16=#fe640b
+palette = 17=#dc8a78
