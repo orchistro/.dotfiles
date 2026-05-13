@@ -126,7 +126,7 @@ function prepdir() {
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-prepdir .config zsh nvim tmux alacritty
+prepdir .config zsh nvim tmux alacritty ghostty
 # opencode: opencode.json 등 기존 설정을 보존하기 위해 디렉토리 통째로 날리지 않고
 # stow가 관리하는 파일만 정리. themes/는 디렉토리 통째로 심링크
 run mkdir -p ${HOME}/.config/opencode
@@ -258,6 +258,7 @@ run ${STOW} nvim
 run ${STOW} zsh
 run ${STOW} tmux
 run ${STOW} alacritty
+run ${STOW} ghostty
 run ${STOW} opencode
 run ${STOW} local
 
