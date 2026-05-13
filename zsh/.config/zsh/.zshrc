@@ -270,3 +270,5 @@ export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
 # nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" # This loads nvm
+
+export GPG_TTY=$(tty)
