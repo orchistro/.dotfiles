@@ -41,7 +41,7 @@ bindings = [
 ]
 
 [mouse]
-# hide_when_typing = true
+hide_when_typing = true
 bindings = [
   {mouse = "Left", mods = "Control|Shift", chars = "\u0014" },  # 컨트롤 쉬프트 좌클릭을 ^t 로 매핑: tag jump back
 ]
