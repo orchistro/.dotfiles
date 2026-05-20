@@ -28,7 +28,10 @@ function run_macos_specifics()
   echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u USER
 }
 
-(uname -a | grep Darwin 1> /dev/null) && run_macos_specifics
+# run_macos_specifics는 sudo dscl/pwpolicy로 ~3.3s가 걸려 셸 시작을 막으므로 백그라운드 실행.
+# subshell `( ... & )` 패턴: monitor 옵션 상태와 무관하게 jobs 목록에 등록되지 않으며,
+# 출력은 모두 막아 p10k instant prompt와 충돌하지 않게 함.
+[[ "$(uname -s)" == "Darwin" ]] && ( run_macos_specifics >/dev/null 2>&1 & )
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -267,9 +270,19 @@ export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
-# nvm
+# nvm (lazy load: source nvm.sh는 ~1.5–2.5s 걸리므로 실제 호출 시점까지 미룸)
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" # This loads nvm
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  _nvm_lazy_load() {
+    unset -f nvm node npm npx
+    [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
+    source "$NVM_DIR/nvm.sh"
+  }
+  for _cmd in nvm node npm npx; do
+    eval "${_cmd}() { _nvm_lazy_load; ${_cmd} \"\$@\"; }"
+  done
+  unset _cmd
+fi
 
 # export GPG_TTY=$(tty)
 export GPG_TTY=${TTY:-$(tty 2>/dev/null)}
