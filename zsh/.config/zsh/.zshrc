@@ -20,12 +20,12 @@ function run_macos_specifics()
   alert_ssh_alive_interval
 
   # lock screen으로 들어갔을 때 버벅거리는 문제 해결
-  dscl . readpl /Users/user accountPolicyData history > /dev/null 2>&1
+  dscl . readpl ${HOME} accountPolicyData history > /dev/null 2>&1
   if [ $? -ne 181 ]; then
     sudo dscl . deletepl ${HOME} accountPolicyData history
   fi
 
-  echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u USER
+  echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u $(whoami)
 }
 
 # run_macos_specifics는 sudo dscl/pwpolicy로 ~3.3s가 걸려 셸 시작을 막으므로 백그라운드 실행.
