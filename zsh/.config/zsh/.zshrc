@@ -22,7 +22,7 @@ function run_macos_specifics()
   # lock screen으로 들어갔을 때 버벅거리는 문제 해결
   dscl . readpl ${HOME} accountPolicyData history > /dev/null 2>&1
   if [ $? -ne 181 ]; then
-    sudo dscl . deletepl ${HOME} accountPolicyData history
+    echo $my_passwd | sudo -S dscl . deletepl ${HOME} accountPolicyData history
   fi
 
   echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u $(whoami)
