@@ -22,9 +22,9 @@ function run_macos_specifics()
   alert_ssh_alive_interval >/dev/null 2>&1
   _macos_status $? "ssh ServerAliveInterval=30"
 
-  # lock screen에서 버벅거리는 문제 해결: 정책이 존재하면(rc != 181) 삭제
+  # lock screen에서 버벅거리는 문제 해결: 정책이 존재하면(readpl 성공) 삭제
   dscl . readpl ${HOME} accountPolicyData history >/dev/null 2>&1
-  if [ $? -ne 181 ]; then
+  if [ $? -eq 0 ]; then
     echo $my_passwd | sudo -S dscl . deletepl ${HOME} accountPolicyData history >/dev/null 2>&1
     _macos_status $? "dscl deletepl accountPolicyData history"
   fi
