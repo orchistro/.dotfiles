@@ -2,36 +2,37 @@ my_passwd="1803"
 
 function alert_ssh_alive_interval()
 {
-    # echo "==============================================================================="
-    # echo "Need to reset ServerAliveInterval in /etc/ssh/ssh_config."
-    # echo "Running Following:"
-    # echo "-------------------------------------------------------------------------------"
-    # echo "grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \\"
-    # echo "sudo /bin/bash -c 'echo -e \"\tServerAliveInterval 30\" >> /etc/ssh/ssh_config'"
-    # echo "==============================================================================="
+    grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config >/dev/null 2>&1 && return 0
+    echo $my_passwd | sudo -S /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
+}
 
-    grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config 1> /dev/null || \
-      echo $my_passwd | sudo -S /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
+function _macos_status()
+{
+  local rc=$1 label=$2
+  if (( rc == 0 )); then
+    print -P "%F{green}[ok]%f   $label"
+  else
+    print -P "%F{red}[fail]%f $label (rc=$rc)"
+  fi
 }
 
 function run_macos_specifics()
 {
   # ssh alive interval 조정
-  alert_ssh_alive_interval
+  alert_ssh_alive_interval >/dev/null 2>&1
+  _macos_status $? "ssh ServerAliveInterval=30"
 
-  # lock screen으로 들어갔을 때 버벅거리는 문제 해결
-  dscl . readpl ${HOME} accountPolicyData history > /dev/null 2>&1
-  if [ $? -ne 181 ]; then
-    sudo dscl . deletepl ${HOME} accountPolicyData history
+  # lock screen에서 버벅거리는 문제 해결: 정책이 존재하면(readpl 성공) 삭제
+  dscl . readpl ${HOME} accountPolicyData history >/dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo $my_passwd | sudo -S dscl . deletepl ${HOME} accountPolicyData history >/dev/null 2>&1
+    _macos_status $? "dscl deletepl accountPolicyData history"
   fi
 
-  echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u $(whoami)
+  echo $my_passwd | sudo -S pwpolicy -clearaccountpolicies -u $(whoami) >/dev/null 2>&1
+  _macos_status $? "pwpolicy -clearaccountpolicies -u $(whoami)"
 }
 
-# run_macos_specifics는 sudo dscl/pwpolicy로 ~3.3s가 걸려 셸 시작을 막으므로 백그라운드 실행.
-# subshell `( ... & )` 패턴: monitor 옵션 상태와 무관하게 jobs 목록에 등록되지 않으며,
-# 출력은 모두 막아 p10k instant prompt와 충돌하지 않게 함.
-[[ "$(uname -s)" == "Darwin" ]] && ( run_macos_specifics >/dev/null 2>&1 & )
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -286,3 +287,6 @@ fi
 
 # export GPG_TTY=$(tty)
 export GPG_TTY=${TTY:-$(tty 2>/dev/null)}
+
+# macOS 전용 sudo 작업 동기 실행 (~2s).
+[[ "$(uname -s)" == "Darwin" ]] && run_macos_specifics
