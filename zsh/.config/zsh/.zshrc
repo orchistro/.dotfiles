@@ -8,8 +8,8 @@ function genpw() {
     LC_ALL=C tr -dc 'A-Z' < /dev/urandom | head -c1
     LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c1
     LC_ALL=C tr -dc '0-9' < /dev/urandom | head -c1
-    LC_ALL=C tr -dc '%^*()_-=' < /dev/urandom | head -c1
-    LC_ALL=C tr -dc 'A-Za-z0-9%^*()_-=' < /dev/urandom | head -c16
+    LC_ALL=C tr -dc '%^*_=' < /dev/urandom | head -c1
+    LC_ALL=C tr -dc 'A-Za-z0-9%^*_=' < /dev/urandom | head -c16
     echo
   done
 }
