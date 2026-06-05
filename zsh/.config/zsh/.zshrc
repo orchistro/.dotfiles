@@ -3,7 +3,6 @@ my_passwd="1803"
 function genpw() {
   local count=$1
 
-
   for i in {1..${count}}; do
     printf "%d: " "$i"
     LC_ALL=C tr -dc 'A-Z' < /dev/urandom | head -c1
