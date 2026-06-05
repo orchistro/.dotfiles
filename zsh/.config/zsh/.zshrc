@@ -1,13 +1,26 @@
 my_passwd="1803"
 
-function alert_ssh_alive_interval()
-{
+function genpw() {
+  local count=$1
+
+
+  for i in {1..${count}}; do
+    printf "%d: " "$i"
+    LC_ALL=C tr -dc 'A-Z' < /dev/urandom | head -c1
+    LC_ALL=C tr -dc 'a-z' < /dev/urandom | head -c1
+    LC_ALL=C tr -dc '0-9' < /dev/urandom | head -c1
+    LC_ALL=C tr -dc '%^*()_-=' < /dev/urandom | head -c1
+    LC_ALL=C tr -dc 'A-Za-z0-9%^*()_-=' < /dev/urandom | head -c16
+    echo
+  done
+}
+
+function alert_ssh_alive_interval() {
     grep 'ServerAliveInterval.*30' /etc/ssh/ssh_config >/dev/null 2>&1 && return 0
     echo $my_passwd | sudo -S /bin/bash -c 'echo -e "\tServerAliveInterval 30" >> /etc/ssh/ssh_config'
 }
 
-function _macos_status()
-{
+function _macos_status() {
   local rc=$1 label=$2
   if (( rc == 0 )); then
     print -P "%F{green}[ok]%f   $label"
@@ -16,8 +29,7 @@ function _macos_status()
   fi
 }
 
-function run_macos_specifics()
-{
+function run_macos_specifics() {
   # ssh alive interval 조정
   alert_ssh_alive_interval >/dev/null 2>&1
   _macos_status $? "ssh ServerAliveInterval=30"
