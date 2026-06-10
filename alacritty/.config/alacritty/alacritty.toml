@@ -38,7 +38,7 @@ style.blinking = "Never"
 bindings = [
   { key = "N", mods = "Command", action = "CreateNewWindow" },
   { key = "N", mods = "Command|Shift", action = "SpawnNewInstance" },
-  { key = "Return", mods = "Shift", chars = "\u001B\r" },
+  { key = "Return", mods = "Shift", chars = "\u001B\r" }, # claude-code 에서 shift-enter 를 줄바꿈으로 사용하기 위함
 ]
 
 [mouse]
