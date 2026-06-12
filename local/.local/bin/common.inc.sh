@@ -1,4 +1,4 @@
 function run() {
-  printf '%q ' "$@"
+  printf '%q ' "$@";echo
   "$@"
 }
