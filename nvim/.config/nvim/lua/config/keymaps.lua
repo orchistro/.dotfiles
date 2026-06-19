@@ -20,6 +20,10 @@ vim.keymap.set("n", "<F10>", ":make<CR>")
 --  See `:help hlsearch`
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Shift+click: move cursor to the clicked word and search for it (like `*`)
+--  remap=true so `*` routes through the nvim-hlslens mapping
+vim.keymap.set("n", "<S-LeftMouse>", "<LeftMouse>*", { remap = true, desc = "Search word under mouse cursor" })
+
 -- Scroll the screen without moving the cursor
 vim.keymap.set("n", "<C-U>", "3<C-U>")
 vim.keymap.set("n", "<C-D>", "3<C-D>")
