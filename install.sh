@@ -194,6 +194,7 @@ run rm -rf ${XDG_CACHE_HOME}/oh-my-zsh                  # OMZ 캐시/로그
 run rm -f  ~/.p10k.zsh ${ZDOTDIR}/.p10k.zsh            # powerlevel10k 설정 파일
 run rm -rf ${XDG_CACHE_HOME}/p10k-*                     # p10k instant-prompt 캐시/덤프
 run rm -f  ${ZDOTDIR}/.zcompdump* ~/.zcompdump*        # 스테일 compinit 덤프 (재생성됨)
+run rm -f  ~/.bashrc ~/.vimrc                          # 예전 install.sh 가 만들던 파일 (이제 미사용)
 run rm -rf ~/.tmux
 run rm -rf ~/.tmux.conf
 
@@ -373,31 +374,6 @@ function install_codelldb() {
 }
 
 install_codelldb
-
-echo "########################################################"
-echo "Configuring bashrc and vimrc"
-echo "########################################################"
-function clear_bashrc() {
-  local begin end tmp=${HOME}/.bashrc.tmp
-  begin=$(grep -n '# BEGIN bashrc for orchistro' ~/.bashrc | head -1 | cut -d: -f1)
-  end=$(grep -n '# END bashrc for orchistro' ~/.bashrc | head -1 | cut -d: -f1)
-  # 마커가 둘 다 있어야만 제거 시도
-  { [ -z "$begin" ] || [ -z "$end" ]; } && return
-  # begin-1(상단 배너)~end+1(하단 배너) 을 들어낸다.
-  # head -n 0 은 macOS(BSD) head 에서 에러나므로 begin-2 가 1 이상일 때만 실행.
-  {
-    [ $((begin - 2)) -ge 1 ] && head -n $((begin - 2)) ~/.bashrc
-    tail -n +$((end + 2)) ~/.bashrc
-  } > "$tmp"
-  mv "$tmp" ~/.bashrc
-}
-
-if [[ -e ${HOME}/.bashrc ]]; then
-  grep -n '# BEGIN bashrc for orchistro' ~/.bashrc && clear_bashrc
-fi
-cat ${self_dir}/bashrc >> ${HOME}/.bashrc
-
-cp ${self_dir}/vimrc ${HOME}/.vimrc
 
 echo "########################################################"
 echo "Done!!"

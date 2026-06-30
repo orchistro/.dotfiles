@@ -1,3 +1,8 @@
+# zsh prompt expansion 의 %x (현재 소스 중인 파일 경로) 사용
+# - ${(%):-%x} → 현재 파일 경로
+# - :A → 절대 경로(심링크 해소)
+# - :h → 디렉터리(head)
+# 이렇게 하면 외부 dirname·서브쉘 없이 zsh 만으로 안전하게 디렉터리를 구함.
 self_dir=${${(%):-%x}:A:h}
 
 source ${self_dir}/functions.zsh
