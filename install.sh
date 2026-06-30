@@ -292,6 +292,13 @@ echo "########################################################"
 run rm -f ${HOME}/.local/bin/starship
 run cargo install --locked --force starship
 
+# node.js 를 설치하는 이유: Python LSP 인 pyright 가 npm 패키지라서다.
+# - 아래 `npm install -g pyright` 에 node 가 필요하고,
+# - nvim 은 mason 으로 pyright(npm 패키지)를 설치하는데, mason 역시 node 에 의존한다
+#   (mason 의 다른 서버 clangd·lua_ls·rust_analyzer·stylua 는 프리빌트, gopls 는 go 라 node 불필요).
+# 따라서 pyright 를 쓰는 한 node 는 빠질 수 없다.
+# node 를 완전히 없애려면 pyright → basedpyright(node 번들, `uv tool install basedpyright`)로
+# 바꾸고 nvim lsp 설정에서 mason 대신 명시적 cmd 로 띄워야 한다. (지금은 업스트림 pyright 유지)
 echo "########################################################"
 echo "installing nvm + node.js"
 echo "########################################################"
