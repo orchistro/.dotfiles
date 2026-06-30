@@ -126,7 +126,7 @@ function prepdir() {
 echo "########################################################"
 echo "Preparing .config directory"
 echo "########################################################"
-prepdir .config zsh nvim tmux alacritty ghostty
+prepdir .config zsh nvim tmux alacritty
 # opencode: opencode.json 등 기존 설정을 보존하기 위해 디렉토리 통째로 날리지 않고
 # stow가 관리하는 파일만 정리. themes/는 디렉토리 통째로 심링크
 run mkdir -p ${HOME}/.config/opencode
@@ -143,24 +143,16 @@ echo "Preparing .local/state directory"
 echo "########################################################"
 prepdir .local/state zsh less
 
-# oh my zsh
-echo "########################################################"
-echo "Setting up oh my zsh"
-echo "########################################################"
-OMZ_DIR=${XDG_CONFIG_HOME}/oh-my-zsh
-run rm -rf ${OMZ_DIR}
-ZSH=${OMZ_DIR} sh -c \
-  "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-  "" \
-  --unattended
-
+# zsh plugins
+# oh-my-zsh / powerlevel10k 없이 ~/.local 에 독립 설치한다.
+# (프롬프트는 starship, TAB 완성은 fzf-tab, 플러그인 source 는 .zshrc 가 직접 처리)
 echo "########################################################"
 echo "Setting up zsh plugins"
 echo "########################################################"
-run git clone --depth=1 https://github.com/romkatv/powerlevel10k.git    ${OMZ_DIR}/custom/themes/powerlevel10k
-run git clone https://github.com/zsh-users/zsh-syntax-highlighting.git  ${OMZ_DIR}/plugins/zsh-syntax-highlighting
-run git clone https://github.com/zsh-users/zsh-autosuggestions          ${OMZ_DIR}/plugins/zsh-autosuggestions
-run cp autosuggestions.zsh ${OMZ_DIR}/custom/autosuggestions.zsh
+run rm -rf ${HOME}/.local/zsh-syntax-highlighting
+run git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.local/zsh-syntax-highlighting
+run rm -rf ${HOME}/.local/zsh-autosuggestions
+run git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions          ${HOME}/.local/zsh-autosuggestions
 
 # tpm
 # tmux 처음 실행시 <leader>I  를 이용해서 .config/tmux/tmux.conf의 플러그인 설치 필요
@@ -194,9 +186,14 @@ fi
 echo "########################################################"
 echo "Cleaning up installations that might have been installed"
 echo "########################################################"
-run rm -f ~/.zshrc*  # OMZ 설치시 만들어준 .zshrc제거 (추후 stow로 zshrc 설치할 것임)
+run rm -f ~/.zshrc*  # 혹시 남아있을 ~/.zshrc + OMZ 백업(.zshrc.pre-oh-my-zsh 등) 제거 (zsh 설정은 stow 로 ZDOTDIR 에 설치됨)
 
-run rm -rf ~/.oh-my-zsh
+# oh-my-zsh / powerlevel10k 잔재를 모두 찾아 제거 (이제 starship + 독립 플러그인으로 대체)
+run rm -rf ~/.oh-my-zsh ${XDG_CONFIG_HOME}/oh-my-zsh   # OMZ 본체 (custom/plugins/themes 포함)
+run rm -rf ${XDG_CACHE_HOME}/oh-my-zsh                  # OMZ 캐시/로그
+run rm -f  ~/.p10k.zsh ${ZDOTDIR}/.p10k.zsh            # powerlevel10k 설정 파일
+run rm -rf ${XDG_CACHE_HOME}/p10k-*                     # p10k instant-prompt 캐시/덤프
+run rm -f  ${ZDOTDIR}/.zcompdump* ~/.zcompdump*        # 스테일 compinit 덤프 (재생성됨)
 run rm -rf ~/.tmux
 run rm -rf ~/.tmux.conf
 
@@ -258,7 +255,6 @@ run ${STOW} nvim
 run ${STOW} zsh
 run ${STOW} tmux
 run ${STOW} alacritty
-run ${STOW} ghostty
 run ${STOW} opencode
 run ${STOW} local
 
@@ -287,16 +283,26 @@ echo "########################################################"
 run cargo install protols ripgrep fd-find
 
 echo "########################################################"
+echo "installing starship (prompt; powerlevel10k 대체)"
+echo "########################################################"
+# 다른 방법(공식 스크립트·brew 등)으로 깔려 있을 수 있는 기존 starship 을 먼저 지우고 cargo 로 재설치.
+# .zshrc PATH 에서 ~/.local/bin 이 cargo/bin 보다 앞서므로, 떠도는 ~/.local/bin/starship 도 제거한다.
+run rm -f ${HOME}/.local/bin/starship
+run cargo install --locked --force starship
+
+echo "########################################################"
 echo "installing nvm + node.js"
 echo "########################################################"
 run rm -rf ${XDG_CONFIG_HOME}/nvm
+# nvm 설치 위치를 XDG 로 고정한다. 설치 스크립트가 NVM_DIR 을 참조하므로 실행 *전에* export 해야
+# ~/.nvm 가 아니라 ${XDG_CONFIG_HOME}/nvm 에 설치되고, 이후 nvm.sh source 경로와 일치한다.
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 nvm_install=nvm_install.sh
 run curl -L https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh --output ${nvm_install}
 run chmod +x ${nvm_install}
 run ./${nvm_install}
 run rm -f ${nvm_install}
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 run nvm install 24  # this installs node 24
@@ -336,27 +342,54 @@ run ${FZF_DIR}/install --xdg --key-bindings --completion --no-update-rc
 echo "########################################################"
 echo "Installing fzf-tab"
 echo "########################################################"
-run git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-${OMZ_DIR}/custom}/plugins/fzf-tab
+run rm -rf ${HOME}/.local/fzf-tab
+run git clone --depth=1 https://github.com/Aloxaf/fzf-tab ${HOME}/.local/fzf-tab
 
 echo "########################################################"
 echo "Installing codelldb"
 echo "########################################################"
-run rm -rf ~/.local/codelldb
-run mkdir -p ~/.local/codelldb
-run curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/codelldb-linux-x64.vsix
-run mv codelldb-linux-x64.vsix ~/.local/codelldb
-run cd ~/.local/codelldb
-run unzip -q codelldb-linux-x64.vsix
+# OS·아키텍처에 맞는 vsix 를 받는다.
+# 에셋 이름: codelldb-{darwin|linux|win32}-{arm64|x64|armhf}.vsix
+function install_codelldb() {
+  local os= arch=
+  case "$(uname)" in
+    Linux)  os="linux" ;;
+    Darwin) os="darwin" ;;
+    *)      echo "error: unsupported OS for codelldb: $(uname)"; return ;;
+  esac
+  case "$(uname -m)" in
+    arm64|aarch64) arch="arm64" ;;
+    x86_64)        arch="x64" ;;
+    *)             echo "error: unsupported arch for codelldb: $(uname -m)"; return ;;
+  esac
+  local vsix="codelldb-${os}-${arch}.vsix"
+  echo "Installing codelldb (${vsix})"
+  run rm -rf ~/.local/codelldb
+  run mkdir -p ~/.local/codelldb
+  run curl -LO https://github.com/vadimcn/codelldb/releases/download/v1.11.4/${vsix}
+  run mv ${vsix} ~/.local/codelldb
+  run cd ~/.local/codelldb
+  run unzip -q ${vsix}
+}
+
+install_codelldb
 
 echo "########################################################"
 echo "Configuring bashrc and vimrc"
 echo "########################################################"
 function clear_bashrc() {
-  begin=$(grep -n '# BEGIN bashrc for orchistro' ~/.bashrc | cut -d : -f 1)
-  end=$(grep -n '# END bashrc for orchistro' ~/.bashrc | cut -d : -f 1)
-  head -n $((begin - 2)) ~/.bashrc > clean_bashrc
-  tail -n +$((end + 2)) ~/.bashrc >> clean_bashrc
-  mv clean_bashrc ~/.bashrc
+  local begin end tmp=${HOME}/.bashrc.tmp
+  begin=$(grep -n '# BEGIN bashrc for orchistro' ~/.bashrc | head -1 | cut -d: -f1)
+  end=$(grep -n '# END bashrc for orchistro' ~/.bashrc | head -1 | cut -d: -f1)
+  # 마커가 둘 다 있어야만 제거 시도
+  { [ -z "$begin" ] || [ -z "$end" ]; } && return
+  # begin-1(상단 배너)~end+1(하단 배너) 을 들어낸다.
+  # head -n 0 은 macOS(BSD) head 에서 에러나므로 begin-2 가 1 이상일 때만 실행.
+  {
+    [ $((begin - 2)) -ge 1 ] && head -n $((begin - 2)) ~/.bashrc
+    tail -n +$((end + 2)) ~/.bashrc
+  } > "$tmp"
+  mv "$tmp" ~/.bashrc
 }
 
 if [[ -e ${HOME}/.bashrc ]]; then
