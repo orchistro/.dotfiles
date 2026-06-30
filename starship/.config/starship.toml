@@ -1,0 +1,45 @@
+# 프롬프트 형식: user@host MM/DD HH:MM:SS  dir  git_branch
+# 예) shawn@dev26040 06/30 13:17:16 /work/dot/1 DOTE-2230-capability
+add_newline = false
+# 정보는 윗줄, 입력 기호(character)는 아랫줄
+format = """
+$username$hostname$time$directory$git_branch$git_status $cmd_duration
+$character"""
+
+[username]
+show_always = false         # root(및 su·SSH) 일 때만 표시. @ 도 username 모듈에 둬서 함께 숨겨진다
+style_user = "green bold"
+style_root = "red bold"
+format = "[$user]($style)@"
+
+[hostname]
+ssh_only = false            # 로컬에서도 항상 표시
+trim_at = "-"               # 첫 '-' 이후 절단 → macOS Bonjour 가 붙이는 -2/-3 접미사 제거 (AL02349815-2 → AL02349815)
+style = "green bold"
+format = "[$hostname]($style) "
+
+[time]
+disabled = false
+time_format = "%m/%d %H:%M:%S"
+style = "yellow"
+format = "[$time]($style) "
+
+[directory]
+truncation_length = 0       # 절단 없이 전체 경로 표시
+truncate_to_repo = false    # repo 루트 기준으로 자르지 않음 (/work/dot/1 그대로)
+style = "blue bold"
+format = "[$path]($style)"
+
+[git_branch]
+symbol = " "               # 브랜치 아이콘 (Nerd Font 필요)
+style = "purple"
+format = " [$symbol$branch]($style)"
+
+[git_status]
+# 변경이 있을 때만 표시. 기본 마크: 수정 !, staged +, untracked ?, stash $,
+# 삭제 ✘, rename », conflict =, ahead ⇡ / behind ⇣ / diverged ⇕
+style = "red"
+format = " [$all_status$ahead_behind]($style)"
+
+# cmd_duration 은 starship 기본값 사용 (2 초 이상 걸리면 "took 3s" 형태로 yellow bold 표시).
+# 모듈 설정은 오버라이드하지 않고, 위 format 의 모듈 사이 간격만 맞춘다.

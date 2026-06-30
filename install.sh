@@ -257,6 +257,7 @@ run ${STOW} zsh
 run ${STOW} tmux
 run ${STOW} alacritty
 run ${STOW} opencode
+run ${STOW} starship
 run ${STOW} local
 
 echo "########################################################"
