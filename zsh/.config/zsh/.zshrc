@@ -40,10 +40,21 @@ unsetopt autocd
 python_venv_activator=${HOME}/.venv/bin/activate
 [[ -e ${python_venv_activator} ]] && source ${python_venv_activator}
 
-setopt incappendhistory
-setopt sharehistory
 export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
+HISTSIZE=50000           # 메모리 내 history 줄 수
+SAVEHIST=10000           # 파일에 저장할 줄 수 (macOS /etc/zshrc 기본 1000 → 확대)
+setopt incappendhistory  # 명령을 즉시 history 파일에 추가
+setopt sharehistory      # 여러 쉘 간 history 공유
+setopt extended_history  # 타임스탬프 기록
+setopt hist_expire_dups_first
+setopt hist_ignore_dups  # 직전과 동일한 명령은 미기록
+setopt hist_ignore_space # 공백으로 시작한 명령은 미기록
+setopt hist_verify       # history 확장(!! 등) 시 즉시 실행 말고 한번 보여줌
+
+# 단어 경계(WORDCHARS)
+WORDCHARS='*?_[]~=&;!#$%^(){}<>'
+bindkey '^[^?' backward-kill-word   # Option/Alt+Backspace(ESC DEL) → 단어 단위 삭제
 
 # ls colors
 export LS_COLORS=':di=00;34:ex=00;32:ln=00;36'  # for linux
@@ -59,6 +70,12 @@ export SERVERPORT=15035
 
 autoload -Uz compinit
 compinit
+
+# completion styling: fzf-tab 와 호환되도록 구성.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # 대소문자 무시 매칭
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"     # 완성 목록 색상 (fzf-tab 도 이 값을 사용)
+zstyle ':completion:*:descriptions' format '[%d]'           # 그룹 설명 헤더 (fzf-tab 그룹 표시에 필요)
+zstyle ':completion:*' menu no                              # zsh 기본 메뉴 off → 메뉴 선택은 fzf-tab 이 담당
 
 # fzf: PATH 추가 + key-bindings/completion 로드.
 # compinit 이후여야 compdef 기반 완성(** 트리거 등)이 정상 설정된다.
