@@ -114,8 +114,9 @@ return {
 				}, -- lua_ls
 				rust_analyzer = {
 					settings = {
-						rust_analyzer = {
-							checkOnSave = { enable = true },
+						-- NOTE: 서버가 인식하는 키는 'rust-analyzer' (하이픈)
+						["rust-analyzer"] = {
+							checkOnSave = true,
 							procMacro = { enable = true },
 						},
 					},
@@ -148,7 +149,7 @@ return {
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						vim.lsp.config(server_name, {})
+						vim.lsp.config(server_name, server)
 						vim.lsp.enable(server_name)
 					end,
 				},
