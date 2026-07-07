@@ -11,7 +11,6 @@ Make sure you clone this repo to `${HOME}/.dotfiles` directory.
 * fzf, fzf-tab
 * zsh-syntax-highlighting, zsh-autosuggestions
 * tpm (tmux plugin manager)
-* codelldb (DAP adapter)
 
 It then symlinks the config packages in this repo with GNU Stow:
 `zsh`, `nvim`, `tmux`, `alacritty`, `opencode`, `starship`, `local` (`~/.local/bin` scripts).
@@ -28,7 +27,7 @@ sudo port install stow
 * install [zsh](https://www.zsh.org/)
 * change your shell to `zsh`
 * install [GNU Stow](https://www.gnu.org/software/stow/) to install `.` files. (Most linux distros do not have this program, you may need to install it yourself)
-* install `unzip` (used to unpack codelldb)
+* install `unzip` (used by nvim's mason to unpack packages such as codelldb)
 * run `install.sh`
 
 ## Options
@@ -41,4 +40,4 @@ sudo port install stow
 nvim-dap wiki page ([Debug Adapter installation](https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation)) introduces 4 debug adaptor: gdb native, codelldb, lldb-vscode, and vscode-cpptools.
 My nvim configuration uses codelldb.
 
-Currently installing codelldb directly. Need to have mason to handle installing adapters.
+codelldb is installed and managed by mason (via mason-tool-installer, see `lsp-config.lua`); nvim-dap points directly at mason's binary, so it does not need to be on `$PATH`.

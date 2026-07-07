@@ -14,7 +14,9 @@ return {
 
 			dap.adapters.codelldb = {
 				type = "executable",
-				command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"
+				-- mason 이 설치한 codelldb 를 사용 (lsp-config.lua 의 ensure_installed 로 자동 설치).
+				-- shell PATH 에 의존하지 않도록 mason bin 경로를 직접 지정한다.
+				command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
 
 				-- On windows you may have to uncomment this:
 				-- detached = false,

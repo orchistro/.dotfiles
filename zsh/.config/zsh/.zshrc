@@ -8,9 +8,8 @@ self_dir=${${(%):-%x}:A:h}
 source ${self_dir}/functions.zsh
 source ${self_dir}/aliases.zsh
 
-codelldb_path=${HOME}/.local/codelldb/extension/adapter
 go_path=${HOME}/.local/go/bin
-export PATH=${codelldb_path}:${go_path}:${HOME}/.local/bin:${HOME}/.local/cargo/bin:/opt/local/bin:/usr/local/bin:${PATH}
+export PATH=${go_path}:${HOME}/.local/bin:${HOME}/.local/cargo/bin:/opt/local/bin:/usr/local/bin:${PATH}
 
 # The e is a way to exit when I hit the end of the file and try to page past it. 
 # The F says to just exit if there is only one screens worth of content. 
