@@ -26,6 +26,13 @@ vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.relativenumber = false
 
+-- 우클릭 popup 메뉴와 native pum (cmdline wildmenu 등) 에 rounded 테두리 (nvim 0.12+)
+-- insert 모드 자동완성은 nvim-cmp 가 자체 rounded float 로 그리므로 이 옵션과 무관
+-- 테두리 색은 hl-PmenuBorder 로 조정 가능
+if vim.fn.has("nvim-0.12") == 1 then
+	vim.opt.pumborder = "rounded"
+end
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
