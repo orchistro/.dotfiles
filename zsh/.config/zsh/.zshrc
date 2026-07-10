@@ -43,8 +43,7 @@ export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
 HISTSIZE=50000           # 메모리 내 history 줄 수
 SAVEHIST=10000           # 파일에 저장할 줄 수 (macOS /etc/zshrc 기본 1000 → 확대)
-setopt incappendhistory  # 명령을 즉시 history 파일에 추가
-setopt sharehistory      # 여러 쉘 간 history 공유
+setopt incappendhistory  # 명령을 즉시 history 파일에 기록 (sharehistory 는 미사용 → 세션 간 실시간 공유 안 함)
 setopt extended_history  # 타임스탬프 기록
 setopt hist_expire_dups_first
 setopt hist_ignore_dups  # 직전과 동일한 명령은 미기록
