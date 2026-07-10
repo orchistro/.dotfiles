@@ -51,8 +51,7 @@ setopt hist_ignore_dups  # 직전과 동일한 명령은 미기록
 setopt hist_ignore_space # 공백으로 시작한 명령은 미기록
 setopt hist_verify       # history 확장(!! 등) 시 즉시 실행 말고 한번 보여줌
 
-# 단어 경계(WORDCHARS)
-WORDCHARS='*?_[]~=&;!#$%^(){}<>'
+WORDCHARS=''
 bindkey '^[^?' backward-kill-word   # Option/Alt+Backspace(ESC DEL) → 단어 단위 삭제
 
 # ls colors
