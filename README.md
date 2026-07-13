@@ -13,7 +13,7 @@ Make sure you clone this repo to `${HOME}/.dotfiles` directory.
 * tpm (tmux plugin manager)
 
 It then symlinks the config packages in this repo with GNU Stow:
-`zsh`, `nvim`, `tmux`, `alacritty`, `opencode`, `starship`, `local` (`~/.local/bin` scripts).
+`zsh`, `nvim`, `tmux`, `alacritty`, `ghostty`, `opencode`, `starship`, `local` (`~/.local/bin` scripts).
 
 ## Macos
 * install [macports](https://www.macports.org/)
