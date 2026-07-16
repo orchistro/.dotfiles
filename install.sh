@@ -46,6 +46,9 @@ Options:
   -n, --nvimoldglibc
         Install Neovim build compatible with older glibc
 
+  -r, --skiprustup
+        Skip reinstalling rustup (keep existing rustup/cargo)
+
   -h, --help
         Show this help message and exit
 
@@ -71,6 +74,7 @@ args=()
 for arg in "$@"; do
   case "$arg" in
     --nvimoldglibc) args+=("-n") ;;
+    --skiprustup) args+=("-r") ;;
     --help) args+=("-h") ;;
     *) args+=("$arg") ;;
   esac
@@ -80,12 +84,17 @@ set -- "${args[@]}"
 
 opt_install_protols="no"
 opt_nvim="latest"
+opt_rustup="install"
 
-while getopts "nh" opt; do
+while getopts "nrh" opt; do
   case "$opt" in
     n)
       echo "[OPT] neovim for older glibc option set"
       opt_nvim="older-glibc"
+      ;;
+    r)
+      echo "[OPT] skip rustup reinstall option set"
+      opt_rustup="skip"
       ;;
     h)
       usage
@@ -265,15 +274,19 @@ run ${STOW} local
 echo "########################################################"
 echo "installing rustup"
 echo "########################################################"
-run rm -rf ${HOME}/.local/cargo
-run rm -rf ${HOME}/.local/rustup
-rustup_install=rustup_install.sh
-export RUSTUP_INIT_SKIP_PATH_CHECK=y
-# --no-modify-path: keep rustup from adding source cargo/env at the end of .zshenv
-run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf --output ${rustup_install}
-run chmod +x ${rustup_install}
-run ./${rustup_install} -y --no-modify-path
-run rm -f ${rustup_install}
+if [ "${opt_rustup}" == "skip" ]; then
+  echo "skipping rustup reinstall"
+else
+  run rm -rf ${HOME}/.local/cargo
+  run rm -rf ${HOME}/.local/rustup
+  rustup_install=rustup_install.sh
+  export RUSTUP_INIT_SKIP_PATH_CHECK=y
+  # --no-modify-path: keep rustup from adding source cargo/env at the end of .zshenv
+  run curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf --output ${rustup_install}
+  run chmod +x ${rustup_install}
+  run ./${rustup_install} -y --no-modify-path
+  run rm -f ${rustup_install}
+fi
 run source ${HOME}/.local/cargo/env
 
 echo "########################################################"
