@@ -3,6 +3,6 @@
 abs=$(cd "$(dirname -- "$0")" >/dev/null; pwd -P)
 source ${abs}/common.inc.sh
 
-host=${1:-dev}
+host=${1:-daily.coder}
 
 run ssh ${host}
