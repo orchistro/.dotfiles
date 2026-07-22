@@ -3,6 +3,7 @@ return {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		opts = {
+			auto_integrations = true,
 			-- color_overrides = {
 			-- 	latte = {
 			-- 		rosewater = "#fdf7e8",
