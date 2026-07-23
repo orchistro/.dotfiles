@@ -7,10 +7,7 @@ return {
 		local fname_comp = {
 			"filename",
 			path = 1,
-			shorting_target = function()
-				local branch = vim.b.gitsigns_head or "" -- curnent branch name
-				return #branch + 30
-			end,
+			shorting_target = 30,
 		}
 		require("lualine").setup({
 			options = {
@@ -20,9 +17,7 @@ return {
 				component_separators = "",
 			},
 			sections = {
-				lualine_a = {
-					{ "branch", padding = { left = 1, right = 1 } },
-				},
+				lualine_a = {},
 				lualine_b = { fname_comp },
 				lualine_c = {},
 				lualine_x = {
@@ -51,7 +46,6 @@ return {
 			},
 			inactive_sections = {
 				lualine_c = {
-					{ "branch", padding = { left = 1, right = 1 } },
 					fname_comp,
 				},
 			},
