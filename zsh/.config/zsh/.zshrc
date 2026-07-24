@@ -41,14 +41,15 @@ python_venv_activator=${HOME}/.venv/bin/activate
 
 export HISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/zsh/history"
 export LESSHISTFILE="${XDG_STATE_HOME:-${HOME}/.local/state}/less/history"
-HISTSIZE=50000           # 메모리 내 history 줄 수
-SAVEHIST=10000           # 파일에 저장할 줄 수 (macOS /etc/zshrc 기본 1000 → 확대)
-setopt incappendhistory  # 명령을 즉시 history 파일에 기록 (sharehistory 는 미사용 → 세션 간 실시간 공유 안 함)
-setopt extended_history  # 타임스탬프 기록
+HISTSIZE=50000                # 메모리 내 history 줄 수
+SAVEHIST=10000                # 파일에 저장할 줄 수 (macOS /etc/zshrc 기본 1000 → 확대)
+setopt incappendhistory       # 명령을 즉시 history 파일에 기록 (sharehistory 는 미사용 → 세션 간 실시간 공유 안 함)
+setopt extended_history       # 타임스탬프 기록
 setopt hist_expire_dups_first
-setopt hist_ignore_dups  # 직전과 동일한 명령은 미기록
-setopt hist_ignore_space # 공백으로 시작한 명령은 미기록
-setopt hist_verify       # history 확장(!! 등) 시 즉시 실행 말고 한번 보여줌
+setopt hist_ignore_dups       # 직전과 동일한 명령은 미기록
+setopt hist_ignore_space      # 공백으로 시작한 명령은 미기록
+setopt hist_verify            # history 확장(!! 등) 시 즉시 실행 말고 한번 보여줌
+setopt interactivecomments    # interactive 모드에서 '#' 을 주석으로 처리. 환경변수 세팅을 복붙할 때 환경변수 뒤에 붙은 # 을 주석으로 처리하게 해 준다. 이거 없으면 에러 남.
 
 WORDCHARS=''
 bindkey '^[^?' backward-kill-word   # Option/Alt+Backspace(ESC DEL) → 단어 단위 삭제
